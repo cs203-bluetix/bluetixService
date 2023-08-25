@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  bluetixservice:
+    image: bluetixservice
+    build: .
+    ports:
+      - "9090:8080"
+    environment:
+      MYSQL_HOST: bluetixdb
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Password123
+      MYSQL_PORT: 3306
+    depends_on:
+      bluetixdb:
+        condition: service_healthy
+    restart: on-failure
+  
+  #For local db.. In future change to AWS
+  bluetixdb:
+    container_name: bluetixdb
+    image: mysql
+    volumes:
+      # - ./temp_db:/var/lib/bluetixdb
+      # - /Users/timothykoh/Desktop/BlueTixRepo/bluetixService/bluetix/temp_db:/var/lib/bluetixdb
+      - volume1:/var/lib/bluetixdb
+    ports: 
+      - 3307:3306
+    environment:
+      MYSQL_DATABASE: bluetixdb
+      MYSQL_ROOT_PASSWORD: Password123
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 --password=$$MYSQL_ROOT_PASSWORD
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  bluetix-net:
+    driver: bridge
+
+volumes:
+  volume1:
+    external: false
