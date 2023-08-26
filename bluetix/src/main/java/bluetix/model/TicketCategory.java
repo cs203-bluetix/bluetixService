@@ -2,29 +2,20 @@ package bluetix.model;
 
 import java.util.*;
 
-import jakarta.persistence.CollectionTable;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter @Setter @NoArgsConstructor
 public class TicketCategory {
-	@EmbeddedId
-    @Column(name="catId")
-    @NotBlank
-    private int catId;
 
-    @Embedded 
-    @NotBlank
+    @Id
+    @Column(name="cat_id", unique=true)
+    private int catId;
+    
+    @ManyToOne(optional = false)
+    @JoinColumn(name="event_id", insertable=false, updatable=false)
     private Event event;
 
     @Column(name="price")

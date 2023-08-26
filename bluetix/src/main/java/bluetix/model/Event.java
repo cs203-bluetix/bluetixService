@@ -1,18 +1,17 @@
 package bluetix.model;
 
-import java.io.Serializable;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+import java.util.*;
 
 @Entity
-@Getter @Setter @NoArgsConstructor @Embeddable
-public class Event implements Serializable{
+@Getter @Setter @NoArgsConstructor
+public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="id", unique=true)
-    private int id;
+    @Column(name="event_id", unique=true)
+    private int eventId;
 
     @Column(name="name")
     @NotBlank
@@ -20,8 +19,10 @@ public class Event implements Serializable{
 
     @Column(name="description")
     @NotBlank
-    private String password;
+    private String description;
 
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    private List<TicketCategory> ticketCategories;
 //    public User() {
 //    	
 //    }
