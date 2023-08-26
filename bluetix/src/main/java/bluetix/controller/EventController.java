@@ -17,12 +17,12 @@ public class EventController {
 	@Autowired
 	private EventRepo eventRepo;
 	
-	@PostMapping("/createUser")
+	@PostMapping("/createEvent")
 	Event createUser(@RequestBody Event newEvent) {
 		return eventRepo.save(newEvent);
 	}
 	
-	@GetMapping("/getAllUsers")
+	@GetMapping("/getAllEvents")
 	List<Event> getAllEvents(){
 		return eventRepo.findAll();
 	}
