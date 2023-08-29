@@ -17,6 +17,7 @@ public class Event {
     @NotBlank
     private String name;
 
+    @Lob
     @Column(name="description")
     @NotBlank
     private String description;
