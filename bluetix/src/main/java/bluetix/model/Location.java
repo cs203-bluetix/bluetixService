@@ -18,10 +18,12 @@ public class Location {
     @NotBlank
     private String name;
 
+    @Lob
     @Column(name="description")
     @NotBlank
     private String description;
     
+    @Lob
     @Column(name="address")
     @NotBlank
     private String address;
