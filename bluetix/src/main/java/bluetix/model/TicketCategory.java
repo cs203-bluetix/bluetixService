@@ -22,9 +22,9 @@ public class TicketCategory {
     @NotBlank
     private double price;
 
-    @ElementCollection(targetClass = Integer.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "seats", joinColumns = @JoinColumn(name = "cat_id"))
-    @Column(name = "seats", nullable = false)
-    private List<Integer> seats = new ArrayList<>();
+//    @ElementCollection(targetClass = Integer.class, fetch = FetchType.EAGER)
+//    @CollectionTable(name = "seats", joinColumns = @JoinColumn(name = "cat_id"))
+//    @Column(name = "seats", nullable = false)
+//    private List<Integer> seats = new ArrayList<>();
 
 }
