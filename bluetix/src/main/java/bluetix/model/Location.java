@@ -1,35 +1,32 @@
 package bluetix.model;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-import java.util.*;
 
 @Entity
 @Getter @Setter @NoArgsConstructor
-public class Event {
+public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="event_id", unique=true)
-    private int eventId;
+    @Column(name="location_id", unique=true)
+    private int locationid;
 
     @Column(name="name")
     @NotBlank
     private String name;
 
-    @Lob
     @Column(name="description")
     @NotBlank
     private String description;
-
-    //One Creator can have many Events
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private Creator creator;
     
-    //One Location to Many Events
-    @ManyToOne
-    @JoinColumn(name = "location_id")
-    private Location location;
-  
+    @Column(name="address")
+    @NotBlank
+    private String address;
+    
+    @Column(name="layoutUrl")
+    @NotBlank
+    private String layoutUrl;
 }
