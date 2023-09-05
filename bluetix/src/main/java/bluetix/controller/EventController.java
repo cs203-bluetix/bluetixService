@@ -9,6 +9,7 @@ import bluetix.exception.DataNotFoundException;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/events")
 public class EventController {
 

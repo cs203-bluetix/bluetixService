@@ -8,6 +8,7 @@ import bluetix.model.User;
 import bluetix.repository.UserRepo;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/user")
 public class UserController {
 

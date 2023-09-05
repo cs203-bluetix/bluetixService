@@ -17,7 +17,6 @@ public class Event {
     @NotBlank
     private String name;
 
-    @Lob
     @Column(name="description")
     @NotBlank
     private String description;
@@ -30,6 +29,6 @@ public class Event {
     //One Location to Many Events
     @ManyToOne
     @JoinColumn(name = "location_id")
-    private Location location;
+    private Venue location;
   
 }
