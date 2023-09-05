@@ -1,37 +1,61 @@
 package bluetix.model;
 
+
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.util.*;
+import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+@Data
+@Builder
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.INTEGER)
-@Getter @Setter @NoArgsConstructor
-public class User {
+@NoArgsConstructor
+@AllArgsConstructor
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="user_id", unique=true)
-    private int id;
-
-    @Column(name="email", unique=true)
-    @NotBlank
+    private Integer id;
+    private String firstName;
+    private String lastName;
+    @Column(unique = true)
     private String email;
+    private String password;
+    @Enumerated(EnumType.STRING)
+    private Role role;
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(role.name()));
+    }
 
-    @Column(name="name")
-    @NotBlank
-    private String name;
+    @Override
+    public String getUsername() {
+        // email in our case
+        return email;
+    }
 
-    @Column(name="crypto_wallet")
-	public String crypto_wallet;
-//
-//    @Column(name="password")
-//    @NotBlank
-//    private String password;
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
 
-//    @Column(name="role")
-//    @NotBlank
-//    private int role;
-    
-	
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }

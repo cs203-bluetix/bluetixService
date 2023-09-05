@@ -36,7 +36,7 @@ public class UserController {
         if (user != null) {
             // Update the properties of the user with the values from updatedUser
             user.setEmail(updatedUser.getEmail());
-            user.setName(updatedUser.getName());
+            //user.setName(updatedUser.getName());
             // Update any other properties here
 
             return userRepo.save(user);
