@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Getter @Setter @NoArgsConstructor
 public class Event {
@@ -28,7 +30,18 @@ public class Event {
     
     //One Location to Many Events
     @ManyToOne
-    @JoinColumn(name = "location_id")
-    private Venue location;
+    @JoinColumn(name = "venue_id")
+    private Venue venue;
+
+    //One Event to Many Sessions
+	@JsonIgnore
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    private List<Session> sessions;
+	
+
+    //One Event to Many TicketCat
+	@JsonIgnore
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+    private List<TicketCategory> ticketCategory;
   
 }
