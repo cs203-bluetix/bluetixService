@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.*;
-import lombok.Data;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +26,7 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
     private String password;
+    public String crypto_wallet;
     @Enumerated(EnumType.STRING)
     private Role role;
     @Override

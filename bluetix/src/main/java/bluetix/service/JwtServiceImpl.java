@@ -19,8 +19,10 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JwtServiceImpl implements JwtService {
-    @Value("413F4428472B4B6250655368566D5970337336763979244226452948404D6351")
+    //TODO: Store in env
+    @Value("RmdtiXkNbmt5eGU4GZBNUpfJiEffVQnU6xVjQKA6J0EZT4LQtxZOdAz0xam6i6uJ")
     private String jwtSigningKey;
+    
     @Override
     public String extractUserName(String token) {
         return extractClaim(token, Claims::getSubject);

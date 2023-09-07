@@ -10,6 +10,7 @@ import bluetix.repository.UserRepo;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/user")
+//TODO: add cryptowallet setter
 public class UserController {
 
     @Autowired
