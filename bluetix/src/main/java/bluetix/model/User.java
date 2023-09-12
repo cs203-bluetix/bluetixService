@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Builder
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "user_type", discriminatorType = DiscriminatorType.INTEGER)
+@DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING)
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {
@@ -27,6 +27,7 @@ public class User implements UserDetails {
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
+    @Column(name = "role", insertable = false, updatable = false)
     private Role role;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -26,6 +26,19 @@ public class SessionController {
         return sessionRepository.findById(sessionId)
                 .orElseThrow(() -> new DataNotFoundException("Session not found"));
     }
+    
+
+//    Get available dates for booking
+    @GetMapping("/getAvail/{venueName}")
+    public List<Session> getSessionsByVenueName(@PathVariable String venueName) {
+        List<Session> sessions = sessionRepository.findByVenueName(venueName);
+        
+        if (sessions.isEmpty()) {
+            throw new DataNotFoundException("Sessions not found for venue: " + venueName);
+        }
+        
+        return sessions;
+    }
 
     @PostMapping
     public Session createSession(@RequestBody Session session) {

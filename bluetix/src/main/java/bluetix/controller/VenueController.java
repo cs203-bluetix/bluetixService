@@ -17,7 +17,7 @@ public class VenueController {
     @Autowired
     private VenueRepo venueRepo;
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     Venue getLocationById(@PathVariable Long id) {
         Optional<Venue> venue = venueRepo.findById(id);
 
