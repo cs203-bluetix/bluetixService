@@ -2,6 +2,8 @@ package bluetix.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -31,4 +33,9 @@ public class Venue {
     
     @Column(name="image")
     private String image;
+    
+    //One Venue to Many Events
+	@JsonIgnore
+    @OneToMany(mappedBy = "venue", cascade = CascadeType.ALL)
+    private List<Event> events;
 }
