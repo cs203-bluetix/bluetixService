@@ -31,7 +31,7 @@ public class SecurityConfiguration {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request.requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/events/**").permitAll()
-                .requestMatchers("api/venues/**").permitAll()
+                .requestMatchers("/api/venues/**").permitAll()
                 .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
