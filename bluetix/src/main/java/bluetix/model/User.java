@@ -26,7 +26,6 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
     private String password;
-    public String crypto_wallet;
     @Enumerated(EnumType.STRING)
     @Column(name = "role", insertable = false, updatable = false)
     private Role role;

@@ -40,6 +40,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(request -> request.requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/events/**").permitAll()
                         .requestMatchers("/api/venues/**").permitAll()
+                        .requestMatchers("/api/sessions/**").permitAll()
                         .requestMatchers("/api/secured/resource").access((authentication, context) -> {
                             boolean granted = queuingSecurityService.check(authentication, context);
                             return new AuthorizationDecision(granted);

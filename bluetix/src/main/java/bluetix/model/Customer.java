@@ -6,15 +6,10 @@ import lombok.*;
 @Entity
 @Getter @Setter @NoArgsConstructor
 public class Customer extends User {
-	private String wallet;
+	private String crypto_wallet;
 
-    // Additional fields specific to the Creator class
-    // ...
-
-    // Constructors, methods, and other members specific to the Creator class
-    // ...
-	public Customer(String wallet) {
-		this.wallet = wallet;
+	public Customer(String crypto_wallet) {
+		this.crypto_wallet = crypto_wallet;
 	}
 
 }

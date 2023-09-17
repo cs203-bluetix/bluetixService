@@ -14,7 +14,7 @@ public class Venue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="venue_id", unique=true)
-    private int venueid;
+    private Long venueid;
 
     @Column(name="name")
     @NotBlank
@@ -31,8 +31,8 @@ public class Venue {
     @Column(name="url")
     private String url;
     
-    @Column(name="image")
-    private String image;
+    @Column(name="image_url")
+    private String image_url;
     
     //One Venue to Many Events
 	@JsonIgnore

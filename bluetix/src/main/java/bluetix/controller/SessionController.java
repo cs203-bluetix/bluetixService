@@ -3,6 +3,10 @@ package bluetix.controller;
 import bluetix.exception.DataNotFoundException;
 import bluetix.model.Session;
 import bluetix.repository.SessionRepo;
+import bluetix.serializable.SessionId;
+import bluetix.service.SectionService;
+import bluetix.service.SessionService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,49 +17,78 @@ import java.util.List;
 @RequestMapping("/api/sessions")
 public class SessionController {
 
-	@Autowired
-    private SessionRepo sessionRepository;
+    private final SessionService sessionService;
+
+    @Autowired
+    public SessionController(SessionService sessionService) {
+        this.sessionService = sessionService;
+    }
 
     @GetMapping
     public List<Session> getAllSessions() {
-        return sessionRepository.findAll();
+        return sessionService.findAll();
     }
 
-    @GetMapping("/{sessionId}")
-    public Session getSessionById(@PathVariable Long sessionId) {
-        return sessionRepository.findById(sessionId)
-                .orElseThrow(() -> new DataNotFoundException("Session not found"));
+    @GetMapping("/{eventId}/{sessionId}")
+    public Session getSessionById(@PathVariable Long eventId, @PathVariable Long sessionId) {
+    	SessionId id = new SessionId();
+    	id.setEventId(eventId);
+    	id.setSessionId(sessionId);
+    	
+        return sessionService.findById(id);
     }
     
 
-//    Get available dates for booking
-    @GetMapping("/getAvail/{venueName}")
-    public List<Session> getSessionsByVenueName(@PathVariable String venueName) {
-        List<Session> sessions = sessionRepository.findByVenueName(venueName);
+//    Get existing sessions by venue id
+    @GetMapping("/findByVenueId/{venue_id}")
+    public List<Session> getSessionsByVenue(@PathVariable Long venue_id) {
+        List<Session> sessions = sessionService.findByVenueId(venue_id);
         
         if (sessions.isEmpty()) {
-            throw new DataNotFoundException("Sessions not found for venue: " + venueName);
+            throw new DataNotFoundException("Sessions not found for venue: " + venue_id);
         }
         
         return sessions;
     }
+    
+//    Get existing sessions by event id
+	  @GetMapping("/byEventId/{event_id}")
+	  public List<Session> getSessionsByEventName(@PathVariable Long event_id) {
+	      List<Session> sessions = sessionService.findByEventId(event_id);
+	      
+	      if (sessions.isEmpty()) {
+	          throw new DataNotFoundException("Sessions not found for event: " + event_id);
+	      }
+	      
+	      return sessions;
+	  }
 
     @PostMapping
     public Session createSession(@RequestBody Session session) {
-        return sessionRepository.save(session);
+//        int eventId = session.getEvent().getEventId();
+//        Long maxSessionId = sessionRepository.findMaxSessionIdByEventId(eventId);
+//        Long nextSessionId = maxSessionId != null ? maxSessionId + 1 : 1;
+//        session.setSessionId(nextSessionId);
+        return sessionService.save(session);
     }
 
-    @PutMapping("/{sessionId}")
-    public Session updateSession(@PathVariable Long sessionId, @RequestBody Session sessionDetails) {
-        Session session = sessionRepository.findById(sessionId)
-                .orElseThrow(() -> new DataNotFoundException("Session not found"));
-        //dont really need
 
-        return sessionRepository.save(session);
+    @PutMapping("/{eventId}/{sessionId}")
+    public Session updateSession(@PathVariable Long eventId, @PathVariable Long sessionId, @RequestBody Session sessionDetails) {
+    	SessionId id = new SessionId();
+    	id.setEventId(eventId);
+    	id.setSessionId(sessionId);
+    	Session session = sessionService.findById(id);
+
+        return sessionService.save(session);
     }
 
-    @DeleteMapping("/{sessionId}")
-    public void deleteSession(@PathVariable Long sessionId) {
-        sessionRepository.deleteById(sessionId);
+    @DeleteMapping("/{eventId}/{sessionId}")
+    public void deleteSession(@PathVariable Long eventId, @PathVariable Long sessionId) {
+    	SessionId id = new SessionId();
+    	id.setEventId(eventId);
+    	id.setSessionId(sessionId);
+    	
+    	sessionService.deleteById(id);
     }
 }

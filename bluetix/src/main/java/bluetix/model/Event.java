@@ -13,15 +13,39 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="event_id", unique=true)
-    private int eventId;
+    private Long eventId;
 
     @Column(name="name")
     @NotBlank
     private String name;
 
-    @Column(name="description")
+    @Column(name="description", columnDefinition = "TEXT")
     @NotBlank
     private String description;
+
+    @Column(name="faq")
+    @NotBlank
+    private String faq;
+
+    @Column(name="type")
+    @NotBlank
+    private String type;
+    
+    @Column(name="ticket_pricing", columnDefinition = "TEXT")
+    @NotBlank
+    private String ticket_pricing;
+    
+    @Column(name="admission_policy", columnDefinition = "TEXT")
+    @NotBlank
+    private String admission_policy;
+
+    @Column(name="image_url")
+    @NotBlank
+    private String image_url;
+    
+    
+    
+    
 
     //One Creator can have many Events
     @ManyToOne
@@ -39,9 +63,9 @@ public class Event {
     private List<Session> sessions;
 	
 
-    //One Event to Many TicketCat
+//    One Event to Many TicketCat
 	@JsonIgnore
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
-    private List<TicketCategory> ticketCategory;
+    private List<Ticket> ticket;
   
 }
