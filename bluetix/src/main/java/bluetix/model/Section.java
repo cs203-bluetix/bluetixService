@@ -29,7 +29,7 @@ public class Section {
     private Venue venue;
     
     //One Section to Many Tickets
-//	@JsonIgnore
-//    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL)
-//    private List<Ticket> tickets;
+	@JsonIgnore
+    @OneToMany(mappedBy = "section", cascade = CascadeType.ALL)
+    private List<Ticket> tickets;
 }

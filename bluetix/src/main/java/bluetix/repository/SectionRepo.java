@@ -13,4 +13,7 @@ public interface SectionRepo extends JpaRepository<Section, SectionId> {
 	 
 	@Query(value = "SELECT * FROM section WHERE venue_id = ?;", nativeQuery = true)
 	List<Section> findByVenueId(Long venueId);
+	
+	@Query(value = "SELECT DISTINCT category FROM section WHERE venue_id = ?;", nativeQuery = true)
+	List<Character> findCategoriesByVenueId(Long venueId);
 }

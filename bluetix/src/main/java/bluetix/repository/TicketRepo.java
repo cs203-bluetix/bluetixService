@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import bluetix.model.SessionTicket;
 import bluetix.model.Ticket;
 import bluetix.serializable.TicketId;
 

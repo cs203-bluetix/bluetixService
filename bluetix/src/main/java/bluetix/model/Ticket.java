@@ -24,9 +24,14 @@ public class Ticket {
     @EmbeddedId
     private TicketId id;
 	
+//    @ManyToOne
+//    @JoinColumn(name = "event_id", insertable=false, updatable=false)
+//    private Event event;
+
     @ManyToOne
-    @JoinColumn(name = "event_id", insertable=false, updatable=false)
-    private Event event;
+    @JoinColumn(name = "event_id", referencedColumnName = "event_id", insertable=false, updatable=false)
+    @JoinColumn(name = "session_id", referencedColumnName = "session_id", insertable=false, updatable=false)
+    private Session session;
 
     @ManyToOne
     @JoinColumn(name = "venue_id", referencedColumnName = "venue_id", insertable=false, updatable=false)
@@ -38,10 +43,14 @@ public class Ticket {
     @NotBlank
     private double price;
 
+    @Column(name="num_seats_left")
+    @NotBlank
+    private int num_seats_left;
+
     //One Ticket to Many SessionTickets
-	@JsonIgnore
-    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL)
-    private List<SessionTicket> sessionTickets;
+//	@JsonIgnore
+//    @OneToMany(mappedBy = "ticket", cascade = CascadeType.ALL)
+//    private List<SessionTicket> sessionTickets;
 	
 
 }

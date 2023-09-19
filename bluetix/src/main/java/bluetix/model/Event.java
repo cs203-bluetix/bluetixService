@@ -42,10 +42,6 @@ public class Event {
     @Column(name="image_url")
     @NotBlank
     private String image_url;
-    
-    
-    
-    
 
     //One Creator can have many Events
     @ManyToOne
@@ -64,8 +60,20 @@ public class Event {
 	
 
 //    One Event to Many TicketCat
-	@JsonIgnore
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
-    private List<Ticket> ticket;
+//	@JsonIgnore
+//    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+//    private List<Ticket> ticket;
+	
+    public Event(Venue venue, Creator creator, String name, String description, String faq, String type, String ticket_pricing, String admission_policy, String image_url) {
+        this.name = name;
+        this.description = description;
+        this.faq = faq;
+        this.type = type;
+        this.ticket_pricing = ticket_pricing;
+        this.admission_policy = admission_policy;
+        this.image_url = image_url;
+        this.venue = venue;
+        this.creator = creator;
+    }
   
 }

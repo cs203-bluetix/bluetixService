@@ -19,6 +19,9 @@ public class TicketId {
     @Column(name = "event_id")
     private Long eventId;
     
+    @Column(name = "session_id")
+    private Long sessionId;
+    
     @Column(name = "venue_id")
     private Long venueId;
     
@@ -31,5 +34,6 @@ public class TicketId {
 //    private Long venueId;
 //    private String sectionId;
 	
+    
 
 }

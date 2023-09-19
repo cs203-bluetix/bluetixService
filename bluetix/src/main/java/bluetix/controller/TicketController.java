@@ -62,9 +62,9 @@ public class TicketController {
 //        return ticketService.save(ticket);
 //    }
 
-    @DeleteMapping("/{event_id}/{venue_id}/{section_id}")
-    void deleteTicket(@PathVariable Long event_id, @PathVariable Long venue_id, @PathVariable String section_id) {
-        TicketId id = new TicketId(event_id, venue_id, section_id);
+    @DeleteMapping("/{event_id}/{session_id}/{venue_id}/{section_id}")
+    void deleteTicket(@PathVariable Long event_id, @PathVariable Long session_id, @PathVariable Long venue_id, @PathVariable String section_id) {
+        TicketId id = new TicketId(event_id, session_id, venue_id, section_id);
         ticketService.deleteById(id);
     }
 }

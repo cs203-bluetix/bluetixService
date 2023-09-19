@@ -30,6 +30,10 @@ public class SectionService {
     public List<Section> getSectionsByVenue(Long venueId) {
     	return sectionRepo.findByVenueId(venueId);
     }
+    
+    public List<Character> getCategoriesByVenue(Long venueId) {
+    	return sectionRepo.findCategoriesByVenueId(venueId);
+    }
 
 	public void deleteById(SectionId id) {
 		sectionRepo.deleteById(id);

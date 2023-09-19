@@ -13,7 +13,7 @@ import bluetix.service.SectionService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/sections")
+@RequestMapping("/api/sections")
 public class SectionController {
 
 //    private final SectionRepo sectionRepo;
@@ -32,8 +32,14 @@ public class SectionController {
     
     //get by Venue_id
     @GetMapping("/{venue_id}")
-    public List<Section> getSectionById(@PathVariable Long venue_id) {
+    public List<Section> getSectionByVenue(@PathVariable Long venue_id) {
         return sectionService.getSectionsByVenue(venue_id);
+    }
+    
+    //get numCategories by Venue_id
+    @GetMapping("/getCategories/{venue_id}")
+    public List<Character> getCategoriesByVenue(@PathVariable Long venue_id) {
+        return sectionService.getCategoriesByVenue(venue_id);
     }
 
     @PostMapping("/")

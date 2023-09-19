@@ -25,6 +25,9 @@ public class Session {
     
     @Column(name = "end_time")
     private Time end_time;
+    
+    @Column(name = "transaction_addr")
+    private String transaction_addr;
 
     //Many sessions to One Events
     @ManyToOne
@@ -33,8 +36,13 @@ public class Session {
     private Event event;
 
     //One Session to Many Tickets
+//	@JsonIgnore
+//    @OneToMany(mappedBy = "session", cascade = CascadeType.ALL)
+//    private List<SessionTicket> sessionTicket;
+
+    //One Session to Many Tickets
 	@JsonIgnore
     @OneToMany(mappedBy = "session", cascade = CascadeType.ALL)
-    private List<SessionTicket> sessionTicket;
+    private List<Ticket> ticket;
 	
 }
