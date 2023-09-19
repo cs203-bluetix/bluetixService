@@ -10,24 +10,39 @@ import org.springframework.stereotype.Service;
 import bluetix.dao.request.SignUpRequest;
 import bluetix.dao.request.SigninRequest;
 import bluetix.dao.response.JwtAuthenticationResponse;
+import bluetix.model.Creator;
+import bluetix.model.Customer;
 import bluetix.model.User;
 import bluetix.repository.UserRepo;
+import bluetix.repository.UserTypeRepo;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
-    private final UserRepo userRepository;
+    private final UserRepo userRepo;
+    private final UserTypeRepo<Customer> customerRepo;
+    private final UserTypeRepo<Creator> creatorRepo;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
     @Override
-    public JwtAuthenticationResponse signup(SignUpRequest request) {
-        var user = User.builder().firstName(request.getFirstName()).lastName(request.getLastName())
+    public JwtAuthenticationResponse signupCustomer(SignUpRequest request) {
+        var user = Customer.builder().firstName(request.getFirstName()).lastName(request.getLastName())
                 .email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
                 .build();
-        userRepository.save(user);
+        customerRepo.save(user);
+        var jwt = jwtService.generateToken(user);
+        return JwtAuthenticationResponse.builder().token(jwt).build();
+    }
+
+    @Override
+    public JwtAuthenticationResponse signupCreator(SignUpRequest request) {
+        var user = Creator.builder().firstName(request.getFirstName()).lastName(request.getLastName())
+                .email(request.getEmail()).password(passwordEncoder.encode(request.getPassword()))
+                .build();
+        creatorRepo.save(user);
         var jwt = jwtService.generateToken(user);
         return JwtAuthenticationResponse.builder().token(jwt).build();
     }
@@ -40,7 +55,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        var user = userRepository.findByEmail(request.getEmail())
+        var user = userRepo.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
         var jwt = jwtService.generateToken(user);
         return JwtAuthenticationResponse.builder().token(jwt).build();
