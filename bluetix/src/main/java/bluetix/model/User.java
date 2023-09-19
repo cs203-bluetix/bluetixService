@@ -26,12 +26,9 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
     private String password;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role", insertable = false, updatable = false)
-    private Role role;
-    @Override
+
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return List.of(new SimpleGrantedAuthority("user"));
     }
 
     @Override
