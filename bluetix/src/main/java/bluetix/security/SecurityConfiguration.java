@@ -5,6 +5,7 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -32,7 +33,6 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final UserService userService;
-
     @Bean
     @Autowired
     public SecurityFilterChain securityFilterChain(HttpSecurity http, QueuingSecurityService queuingSecurityService) throws Exception {
@@ -41,6 +41,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/events/**").permitAll()
                         .requestMatchers("/api/venues/**").permitAll()
                         .requestMatchers("/api/sessions/**").permitAll()
+                        .requestMatchers("/api/v1/resource").hasAuthority("CREATOR")
                         .requestMatchers("/api/secured/resource").access((authentication, context) -> {
                             boolean granted = queuingSecurityService.check(authentication, context);
                             return new AuthorizationDecision(granted);
