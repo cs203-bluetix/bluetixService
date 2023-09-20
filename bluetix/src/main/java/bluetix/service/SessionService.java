@@ -3,12 +3,17 @@ package bluetix.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import bluetix.dto.SessionDTO;
+import bluetix.model.Event;
 import bluetix.model.Session;
 import bluetix.repository.SessionRepo;
 import bluetix.serializable.SessionId;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
-//not used
+
 @Service
 public class SessionService {
     private final SessionRepo sessionRepo;
@@ -23,7 +28,31 @@ public class SessionService {
     }
 
     public Session save(Session session) {
+//    	Long eventId = session.getEvent().getEventId();
+//    	Long largest_session_id = sessionRepo.getLargestSessionByEventId(eventId);
+//    	if(largest_session_id == null) {
+//    		largest_session_id = 1L;
+//    	}
+//        SessionId sessionId = new SessionId();
+//        sessionId.setEventId(eventId);
+//        sessionId.setSessionId(largest_session_id);
         return sessionRepo.save(session);
+    }
+    
+    public List<Session> createList(Event event, List<SessionDTO> sessionDTO) {
+    	List<Session> list = new ArrayList<>();
+    	for(SessionDTO item: sessionDTO) {
+
+            Time startTime = new Time(item.getStart_time().getTime());
+            Time endTime = new Time(item.getEnd_time().getTime());            
+        	Session s = new Session(item.getDate(), startTime, endTime, item.getTransaction_addr(), event);
+        	try {
+        		list.add(sessionRepo.save(s));
+        	} catch (Exception e) {
+        		e.printStackTrace();
+        	}
+    	}
+    	return list;
     }
     
     // Retrieve sessions for a specific event
@@ -40,7 +69,7 @@ public class SessionService {
 	}
 
 	public Session findById(SessionId sessionId) {
-    	return sessionRepo.findById(sessionId.getEventId(), sessionId.getSessionId());
+    	return sessionRepo.findById(sessionId.getEvent().getEventId(), sessionId.getSessionId());
 		// TODO Auto-generated method stub
 	}
 

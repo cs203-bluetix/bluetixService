@@ -1,8 +1,11 @@
 package bluetix.controller;
 
+import java.io.File;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,28 +15,42 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
-import bluetix.exception.DataNotFoundException;
 import bluetix.model.Ticket;
-import bluetix.repository.TicketRepo;
 import bluetix.serializable.TicketId;
+import bluetix.service.SessionService;
 import bluetix.service.TicketService;
 
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/ticket")
 public class TicketController {
-    private final TicketService ticketService;
+	@Autowired
+    private TicketService ticketService;
 
-    @Autowired
-    public TicketController(TicketService ticketService) {
-        this.ticketService = ticketService;
-    }
-
-    @PostMapping
-    Ticket createTicketCategory(@RequestBody Ticket newTicket) {
-        return ticketService.save(newTicket);
-    }
+//    @PostMapping
+//    Ticket createTicketCategory(@RequestParam Ticket) {
+//        return ticketService.save(newTicket);
+//    }
+    
+//	@PostMapping
+//	@Transactional
+//	public ResponseEntity<String> createTickets(
+//	    @RequestParam("category") String category,
+//        @RequestParam("price") int price,
+//	    @RequestParam("event_id") String event_id,
+//        @RequestParam("venue_id") String venue_id) {
+//    	
+//	    try {
+//	        if (ticketService.create(category.charAt(0), (double) price, Long.parseLong(venue_id), Long.parseLong(venue_id))) return ResponseEntity.ok("Tickets created successfully");
+//	        return ResponseEntity.ok("No tickets inserted");
+//	    } catch (Exception e) {
+//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//	            .body("Failed to create tickets: " + e.getMessage());
+//	    }
+//	}
+	
 
     @GetMapping
     List<Ticket> getAllTickets() {
@@ -42,11 +59,6 @@ public class TicketController {
 
     @GetMapping("/{event_id}/{venue_id}/{section_id}")
     Ticket getTicketById(@PathVariable Long event_id, @PathVariable Long venue_id, @PathVariable String section_id) {
-//    	TicketId id = new TicketId();
-//    	id.setEventId(event_id);
-//    	id.setVenueId(venue_id);
-//    	id.setSectionId(section_id);
-//        return ticketService.findById(id);
         return ticketService.findById(event_id, venue_id, section_id);
     }
 
@@ -62,9 +74,9 @@ public class TicketController {
 //        return ticketService.save(ticket);
 //    }
 
-    @DeleteMapping("/{event_id}/{session_id}/{venue_id}/{section_id}")
-    void deleteTicket(@PathVariable Long event_id, @PathVariable Long session_id, @PathVariable Long venue_id, @PathVariable String section_id) {
-        TicketId id = new TicketId(event_id, session_id, venue_id, section_id);
-        ticketService.deleteById(id);
-    }
+//    @DeleteMapping("/{event_id}/{session_id}/{venue_id}/{section_id}")
+//    void deleteTicket(@PathVariable Long event_id, @PathVariable Long session_id, @PathVariable Long venue_id, @PathVariable String section_id) {
+//        TicketId id = new TicketId(event_id, session_id, venue_id, section_id);
+//        ticketService.deleteById(id);
+//    }
 }

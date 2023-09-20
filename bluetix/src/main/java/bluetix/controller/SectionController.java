@@ -13,6 +13,7 @@ import bluetix.service.SectionService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/sections")
 public class SectionController {
 
