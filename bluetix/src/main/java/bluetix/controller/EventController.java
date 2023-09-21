@@ -45,62 +45,62 @@ public class EventController {
 //        return eventRepo.save(newEvent);
 //    }
 	
-	@PostMapping
-	@Transactional
-	public ResponseEntity<String> createEventAndUploadImage(
-	    @RequestParam("name") String name,
-        @RequestParam("description") String description,
-	    @RequestParam("venue_id") String venue_id,
-        @RequestParam("type") String type,
-	    @RequestParam("faq") String faq,
-        @RequestParam("ticket_pricing") String ticket_pricing,
-	    @RequestParam("admission_policy") String admission_policy,
-        @RequestParam("image_url") String image_url,
-	    @RequestParam("file") MultipartFile file) {
-    	
-	    try {
-	        if (file.isEmpty()) {
-	            return ResponseEntity.badRequest().body("Please upload a file.");
-	        }
-
-	        String uploadDir = eventImagePath + File.separator + image_url;
-
-	        File directory = new File(uploadDir);
-	        if (!directory.exists()) {
-	            System.out.println("Making dir " + uploadDir + "....");
-	            directory.mkdirs();
-	        }
-
-	        File destFile = new File(uploadDir + File.separator + file.getOriginalFilename());
-
-	        if (destFile.exists()) {
-	            file.transferTo(destFile);
-	            return ResponseEntity.ok("File overwritten successfully.");
-	        }
-
-	        file.transferTo(destFile);
-	        
-	        Long tempUserId = Long.parseLong("1");
-	        User user = userRepo.findById(tempUserId)
-	                .orElseThrow(EntityNotFoundException::new);
-	        if(!(user instanceof Creator)) {
-	        	throw new Exception("User is not a Creator");
-	        }
-	        Creator creator = (Creator) user;
-	        Venue venue = venueRepo.findById(Long.parseLong(venue_id))
-	                .orElseThrow(EntityNotFoundException::new);
-	        
-	        Event newEvent = new Event(venue, creator, name, description, faq, type, ticket_pricing, admission_policy, image_url);
-
-	        // Save the new event
-	        eventRepo.save(newEvent);
-
-	        return ResponseEntity.ok("Event and file uploaded successfully.");
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload event or file.");
-	    }
-	}
+//	@PostMapping
+//	@Transactional
+//	public ResponseEntity<String> createEventAndUploadImage(
+//	    @RequestParam("name") String name,
+//        @RequestParam("description") String description,
+//	    @RequestParam("venue_id") String venue_id,
+//        @RequestParam("type") String type,
+//	    @RequestParam("faq") String faq,
+//        @RequestParam("ticket_pricing") String ticket_pricing,
+//	    @RequestParam("admission_policy") String admission_policy,
+//        @RequestParam("image_url") String image_url,
+//	    @RequestParam("file") MultipartFile file) {
+//    	
+//	    try {
+//	        if (file.isEmpty()) {
+//	            return ResponseEntity.badRequest().body("Please upload a file.");
+//	        }
+//
+//	        String uploadDir = eventImagePath + File.separator + image_url;
+//
+//	        File directory = new File(uploadDir);
+//	        if (!directory.exists()) {
+//	            System.out.println("Making dir " + uploadDir + "....");
+//	            directory.mkdirs();
+//	        }
+//
+//	        File destFile = new File(uploadDir + File.separator + file.getOriginalFilename());
+//
+//	        if (destFile.exists()) {
+//	            file.transferTo(destFile);
+//	            return ResponseEntity.ok("File overwritten successfully.");
+//	        }
+//
+//	        file.transferTo(destFile);
+//	        
+//	        Long tempUserId = Long.parseLong("1");
+//	        User user = userRepo.findById(tempUserId)
+//	                .orElseThrow(EntityNotFoundException::new);
+//	        if(!(user instanceof Creator)) {
+//	        	throw new Exception("User is not a Creator");
+//	        }
+//	        Creator creator = (Creator) user;
+//	        Venue venue = venueRepo.findById(Long.parseLong(venue_id))
+//	                .orElseThrow(EntityNotFoundException::new);
+//	        
+//	        Event newEvent = new Event(venue, creator, name, description, faq, type, ticket_pricing, admission_policy, image_url);
+//
+//	        // Save the new event
+//	        eventRepo.save(newEvent);
+//
+//	        return ResponseEntity.ok("Event and file uploaded successfully.");
+//	    } catch (Exception e) {
+//	        e.printStackTrace();
+//	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload event or file.");
+//	    }
+//	}
 
 
     @GetMapping

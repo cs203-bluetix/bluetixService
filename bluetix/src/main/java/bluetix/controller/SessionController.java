@@ -29,24 +29,20 @@ public class SessionController {
         return sessionService.findAll();
     }
 
-    @GetMapping("/{eventId}/{sessionId}")
-    public Session getSessionById(@PathVariable Long eventId, @PathVariable Long sessionId) {
-    	SessionId id = new SessionId();
-    	id.setEventId(eventId);
-    	id.setSessionId(sessionId);
-    	
-        return sessionService.findById(id);
-    }
+//    @GetMapping("/{eventId}/{sessionId}")
+//    public Session getSessionById(@PathVariable Long eventId, @PathVariable Long sessionId) {
+//    	SessionId id = new SessionId();
+//    	id.setEventId(eventId);
+//    	id.setSessionId(sessionId);
+//    	
+//        return sessionService.findById(id);
+//    }
     
 
 //    Get existing sessions by venue id
     @GetMapping("/findByVenueId/{venue_id}")
     public List<Session> getSessionsByVenue(@PathVariable Long venue_id) {
         List<Session> sessions = sessionService.findByVenueId(venue_id);
-        
-        if (sessions.isEmpty()) {
-            throw new DataNotFoundException("Sessions not found for venue: " + venue_id);
-        }
         
         return sessions;
     }
@@ -55,10 +51,6 @@ public class SessionController {
 	  @GetMapping("/byEventId/{event_id}")
 	  public List<Session> getSessionsByEventName(@PathVariable Long event_id) {
 	      List<Session> sessions = sessionService.findByEventId(event_id);
-	      
-	      if (sessions.isEmpty()) {
-	          throw new DataNotFoundException("Sessions not found for event: " + event_id);
-	      }
 	      
 	      return sessions;
 	  }
@@ -72,23 +64,23 @@ public class SessionController {
         return sessionService.save(session);
     }
 
-
-    @PutMapping("/{eventId}/{sessionId}")
-    public Session updateSession(@PathVariable Long eventId, @PathVariable Long sessionId, @RequestBody Session sessionDetails) {
-    	SessionId id = new SessionId();
-    	id.setEventId(eventId);
-    	id.setSessionId(sessionId);
-    	Session session = sessionService.findById(id);
-
-        return sessionService.save(session);
-    }
-
-    @DeleteMapping("/{eventId}/{sessionId}")
-    public void deleteSession(@PathVariable Long eventId, @PathVariable Long sessionId) {
-    	SessionId id = new SessionId();
-    	id.setEventId(eventId);
-    	id.setSessionId(sessionId);
-    	
-    	sessionService.deleteById(id);
-    }
+//
+//    @PutMapping("/{eventId}/{sessionId}")
+//    public Session updateSession(@PathVariable Long eventId, @PathVariable Long sessionId, @RequestBody Session sessionDetails) {
+//    	SessionId id = new SessionId();
+//    	id.setEventId(eventId);
+//    	id.setSessionId(sessionId);
+//    	Session session = sessionService.findById(id);
+//
+//        return sessionService.save(session);
+//    }
+//
+//    @DeleteMapping("/{eventId}/{sessionId}")
+//    public void deleteSession(@PathVariable Long eventId, @PathVariable Long sessionId) {
+//    	SessionId id = new SessionId();
+//    	id.setEventId(eventId);
+//    	id.setSessionId(sessionId);
+//    	
+//    	sessionService.deleteById(id);
+//    }
 }

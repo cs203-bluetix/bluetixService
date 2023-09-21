@@ -2,6 +2,7 @@ package bluetix.serializable;
 
 import bluetix.model.Event;
 import bluetix.model.Section;
+import bluetix.model.Session;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
@@ -15,25 +16,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode
 public class TicketId {
-
-    @Column(name = "event_id")
-    private Long eventId;
     
-    @Column(name = "session_id")
-    private Long sessionId;
+    private Session session;
     
-    @Column(name = "venue_id")
-    private Long venueId;
-    
-    @Column(name = "section_id")
-    private String sectionId;
-
-//  private Event event;
-//  private Section section;
-//    private Long eventId;
-//    private Long venueId;
-//    private String sectionId;
-	
-    
+    private Section section;
 
 }
