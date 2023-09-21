@@ -1,6 +1,7 @@
 package bluetix.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 
 import java.util.*;
@@ -22,7 +23,9 @@ public class User implements UserDetails {
     private Integer id;
     private String firstName;
     private String lastName;
+
     @Column(unique = true)
+    @Email
     private String email;
     private String password;
 

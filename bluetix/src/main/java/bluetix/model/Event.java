@@ -19,6 +19,7 @@ public class Event {
     @NotBlank
     private String name;
 
+    @Lob
     @Column(name="description", columnDefinition = "TEXT")
     @NotBlank
     private String description;
@@ -35,6 +36,7 @@ public class Event {
     @NotBlank
     private String ticket_pricing;
     
+    @Lob
     @Column(name="admission_policy", columnDefinition = "TEXT")
     @NotBlank
     private String admission_policy;
