@@ -34,7 +34,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
         customerRepo.save(user);
         var jwt = jwtService.generateToken(user);
-        return JwtAuthenticationResponse.builder().token(jwt).build();
+        return JwtAuthenticationResponse.builder().token(jwt).email(request.getEmail()).role("CUSTOMER").build();
     }
 
     @Override
@@ -44,7 +44,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .build();
         creatorRepo.save(user);
         var jwt = jwtService.generateToken(user);
-        return JwtAuthenticationResponse.builder().token(jwt).build();
+        return JwtAuthenticationResponse.builder().token(jwt).email(request.getEmail()).role("CREATOR").build();
     }
 
     @Override
@@ -58,7 +58,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var user = userRepo.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
         var jwt = jwtService.generateToken(user);
-        return JwtAuthenticationResponse.builder().token(jwt).build();
+        return JwtAuthenticationResponse.builder().token(jwt).email(request.getEmail()).role(user.getDecriminatorValue()).build();
     }
 
     private void authenticate(String username, String password) throws Exception {
