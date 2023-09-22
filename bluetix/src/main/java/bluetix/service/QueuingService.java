@@ -10,6 +10,7 @@ public class QueuingService<T> {
 
     //TODO: change enqueue to implement priority
     public void enqueue(T item) {
+        if(!queue.contains(item))
         queue.addLast(item);
     }
 
