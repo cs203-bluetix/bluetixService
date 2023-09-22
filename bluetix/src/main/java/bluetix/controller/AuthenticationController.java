@@ -24,13 +24,25 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/signup/customer")
-    public ResponseEntity<JwtAuthenticationResponse> signupCustomer(@RequestBody SignUpRequest request) {
-        return ResponseEntity.ok(authenticationService.signupCustomer(request));
+    public ResponseEntity<JwtAuthenticationResponse> signupCustomer(@RequestBody SignUpRequest request,
+            HttpServletResponse response) {
+        JwtAuthenticationResponse responseBody = authenticationService.signupCustomer(request);
+        Cookie token = new Cookie("jwt", responseBody.getToken());
+        token.setHttpOnly(true);
+        token.setSecure(true);
+        response.addCookie(token);
+        return ResponseEntity.ok(responseBody);
     }
 
     @PostMapping("/signup/creator")
-    public ResponseEntity<JwtAuthenticationResponse> signupCreator(@RequestBody SignUpRequest request) {
-        return ResponseEntity.ok(authenticationService.signupCreator(request));
+    public ResponseEntity<JwtAuthenticationResponse> signupCreator(@RequestBody SignUpRequest request,
+            HttpServletResponse response) {
+        JwtAuthenticationResponse responseBody = authenticationService.signupCreator(request);
+        Cookie token = new Cookie("jwt", responseBody.getToken());
+        token.setHttpOnly(true);
+        token.setSecure(true);
+        response.addCookie(token);
+        return ResponseEntity.ok(responseBody);
     }
 
     @PostMapping("/signin")
@@ -38,7 +50,7 @@ public class AuthenticationController {
     public ResponseEntity<JwtAuthenticationResponse> signin(@RequestBody SigninRequest request,
             HttpServletResponse response) {
         JwtAuthenticationResponse responseBody = authenticationService.signin(request);
-        Cookie token = new Cookie("jwt" ,responseBody.getToken());
+        Cookie token = new Cookie("jwt", responseBody.getToken());
         token.setHttpOnly(true);
         token.setSecure(true);
         response.addCookie(token);
