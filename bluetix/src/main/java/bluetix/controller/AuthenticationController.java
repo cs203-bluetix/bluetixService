@@ -29,7 +29,7 @@ public class AuthenticationController {
         JwtAuthenticationResponse responseBody = authenticationService.signupCustomer(request);
         Cookie token = new Cookie("jwt", responseBody.getToken());
         token.setHttpOnly(true);
-        token.setSecure(true);
+        //token.setSecure(true);
         response.addCookie(token);
         return ResponseEntity.ok(responseBody);
     }
@@ -40,7 +40,7 @@ public class AuthenticationController {
         JwtAuthenticationResponse responseBody = authenticationService.signupCreator(request);
         Cookie token = new Cookie("jwt", responseBody.getToken());
         token.setHttpOnly(true);
-        token.setSecure(true);
+        //token.setSecure(true);
         response.addCookie(token);
         return ResponseEntity.ok(responseBody);
     }
@@ -52,9 +52,8 @@ public class AuthenticationController {
         JwtAuthenticationResponse responseBody = authenticationService.signin(request);
         Cookie token = new Cookie("jwt", responseBody.getToken());
         token.setHttpOnly(true);
-        token.setSecure(true);
+        //token.setSecure(true);
         response.addCookie(token);
         return ResponseEntity.ok(responseBody);
-
     }
 }
