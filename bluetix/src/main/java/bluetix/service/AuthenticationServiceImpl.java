@@ -54,7 +54,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         try {
             authenticate(request.getEmail(), request.getPassword());
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         var user = userRepo.findByEmail(request.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
