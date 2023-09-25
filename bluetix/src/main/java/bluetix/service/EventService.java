@@ -1,5 +1,7 @@
 package bluetix.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +27,11 @@ public class EventService {
 	@Autowired
     private UserRepo userRepo;
 
+	//Basic Event CRUD
     public Event getEventById(Long eventId) {
         return eventRepo.findById(eventId).orElse(null);
     }
 
-    // Example method to create a new event
     public Event createEventWithVenueId(EventDTO eventDTO, Long venue_id, Long user_id) throws Exception {
     	Venue venue = venueRepo.findById(venue_id).orElse(null);
         User user = userRepo.findById(user_id)
@@ -42,15 +44,17 @@ public class EventService {
         return eventRepo.save(newEvent);
     }
 
-    // Example method to update an existing event
     public Event updateEvent(Event event) {
         return eventRepo.save(event);
     }
 
-    // Example method to delete an event by ID
     public void deleteEventById(Long eventId) {
         eventRepo.deleteById(eventId);
     }
     
-    // Add more methods as needed to perform operations on events
+    //Creator's Event Settings
+    public List<Event> findByCreatorId(Long creatorId) {
+        return eventRepo.findByCreatorId(creatorId);
+    }
+    
 }
