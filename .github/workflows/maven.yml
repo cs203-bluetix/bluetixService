@@ -32,7 +32,6 @@ jobs:
     - name: Build with Maven
       run: mvn -B package
     - name: Build the Docker image
-      if: steps.
       run: docker build . --file Dockerfile
 
     
