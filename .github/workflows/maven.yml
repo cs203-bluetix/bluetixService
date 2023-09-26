@@ -28,10 +28,9 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Set Environment Variable
+    - name: Run test Cases
       env:
         jwtSecret:${{secrets.jwtSecret}}
-    - name: Run test Cases
       run: mvn test 
     - name: Build with Maven
       id: mvnpackage
