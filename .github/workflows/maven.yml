@@ -33,10 +33,10 @@ jobs:
       id: test
       run: mvn test 
     - name: Build with Maven
-      id: build
+      id: package
       run: mvn -B package -f src/pom.xml
     - name: Build the Docker image
-      if: steps.build.outcome == 'success'
+      if: steps.package.outcome == 'success'
       run: docker build . --file Dockerfile
 
     
