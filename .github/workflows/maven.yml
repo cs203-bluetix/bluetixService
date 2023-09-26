@@ -31,8 +31,7 @@ jobs:
     - name: Set Environment Variable
       env:
         jwtSecret:${{secrets.jwtSecret}}
-      run: |
-      echo $jwtSecret
+      run: echo $jwtSecret
     - name: Run test Cases
       run: mvn test 
     - name: Build with Maven
