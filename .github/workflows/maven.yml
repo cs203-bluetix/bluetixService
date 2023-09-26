@@ -32,5 +32,5 @@ jobs:
     - name: Build with Maven
       run: mvn -B package --file bluetix/pom.xml
     - name: Submit Dependency Snapshot
-      uses: advanced-security/maven-dependency-submission-action@v3 --file bluetix/pom.xml
+      uses: advanced-security/maven-dependency-submission-action@v3
 
