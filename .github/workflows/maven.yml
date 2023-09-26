@@ -31,8 +31,10 @@ jobs:
     - name: Run test Cases
       run: mvn test 
     - name: Build with Maven
+      id: mvnpackage
       run: mvn -B package
     - name: Build the Docker image
+      if: steps.mvnpackage.outcome == 'success'
       run: docker build . --file Dockerfile
 
     
