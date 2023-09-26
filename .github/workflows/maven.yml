@@ -20,10 +20,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      env:
-        jwtSecret:${{secrets.jwtSecret}}
-      run: |
-      example-command "$env:jwtSecret"
     - uses: actions/checkout@v3
     - name: Set up JDK 17
       id: jdk
@@ -32,6 +28,11 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - name: Set Environment Variable
+      env:
+        jwtSecret:${{secrets.jwtSecret}}
+      run: |
+      echo $jwtSecret
     - name: Run test Cases
       run: mvn test 
     - name: Build with Maven
