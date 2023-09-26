@@ -16,7 +16,8 @@ on:
 
 jobs:
   build:
-
+    env:
+      jwtSecret: ${{secrets.jwtSecret}}
     runs-on: ubuntu-latest
 
     steps:
@@ -29,8 +30,6 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Set Environment Variable
-      env:
-        jwtSecret:${{secrets.jwtSecret}}
       run: echo $jwtSecret
     - name: Run test Cases
       run: mvn test 
