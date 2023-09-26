@@ -11,6 +11,19 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: Password123
       MYSQL_PORT: 3306
+
+      RDS_MYSQL_HOST: bluetix-db.cnrxufwju1qq.ap-southeast-2.rds.amazonaws.com/bluetixdb
+      RDS_MYSQL_USER: admin
+      RDS_MYSQL_PASSWORD: Password123
+      RDS_MYSQL_PORT: 3306
+      
+      S3_SQL_HOST: ""
+      S3_REGION_STATIC: ap-southeast-2
+      S3_BUCKET: bluetixbucket
+      S3_ACCESS_KEY: AKIATZYGZYDHQ3KY6MB3
+      S3_SECRET_ACCESS_KEY: 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
+        
+
     depends_on:
       bluetixdb:
         condition: service_healthy
