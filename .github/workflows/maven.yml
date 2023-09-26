@@ -13,6 +13,8 @@ on:
     branches: [ "main", "dev" ]
   pull_request:
     branches: [ "main", "dev" ]
+  branch_protection_rule:
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -33,7 +35,7 @@ jobs:
     - name: Build with Maven
       id: mvnpackage
       run: mvn -B package
-    - name: Build the Docker image
+    - name: Build the Docker Image
       if: steps.mvnpackage.outcome == 'success'
       run: docker build . --file Dockerfile
 
