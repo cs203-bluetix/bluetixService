@@ -20,23 +20,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - id: checkout
-     uses: actions/checkout@v3
+    - uses: actions/checkout@v3
     - name: Set up JDK 17
-      id: set_up_jdk
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
     - name: Run test Cases
-      id: test
       run: mvn test 
     - name: Build with Maven
-      id: package
-      run: mvn -B package -f src/pom.xml
-    - name: Build the Docker image
-      if: steps.package.outcome == 'success'
-      run: docker build . --file Dockerfile
+      run: mvn -B package
+
 
     
