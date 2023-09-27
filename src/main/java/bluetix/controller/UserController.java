@@ -51,4 +51,11 @@ public class UserController {
             userRepo.deleteById(id);
         }
     }
+    
+
+    
+    @GetMapping("/test")
+    public String test() {
+    	return "Bluetix Service up and running";
+    }
 }
