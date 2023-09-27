@@ -11,29 +11,42 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: Password123
       MYSQL_PORT: 3306
-    depends_on:
-      bluetixdb:
-        condition: service_healthy
+
+      RDS_MYSQL_HOST: bluetix-db.cnrxufwju1qq.ap-southeast-2.rds.amazonaws.com/bluetixdb
+      RDS_MYSQL_USER: admin
+      RDS_MYSQL_PASSWORD: Password123
+      RDS_MYSQL_PORT: 3306
+      
+      S3_SQL_HOST: ""
+      S3_REGION_STATIC: ap-southeast-2
+      S3_BUCKET: bluetixbucket
+      S3_ACCESS_KEY: AKIATZYGZYDHQ3KY6MB3
+      S3_SECRET_ACCESS_KEY: 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
+        
+
+    # depends_on:
+    #   bluetixdb:
+    #     condition: service_healthy
     restart: on-failure
   
   #For local db.. In future change to AWS
-  bluetixdb:
-    container_name: bluetixdb
-    image: mysql
-    volumes:
-      # - ./temp_db:/var/lib/bluetixdb
-      # - /Users/timothykoh/Desktop/BlueTixRepo/bluetixService/bluetix/temp_db:/var/lib/bluetixdb
-      - volume1:/var/lib/bluetixdb
-    ports: 
-      - 3307:3306
-    environment:
-      MYSQL_DATABASE: bluetixdb
-      MYSQL_ROOT_PASSWORD: Password123
-    healthcheck:
-      test: mysqladmin ping -h 127.0.0.1 --password=$$MYSQL_ROOT_PASSWORD
-      interval: 5s
-      timeout: 5s
-      retries: 3
+  # bluetixdb:
+  #   container_name: bluetixdb
+  #   image: mysql
+  #   volumes:
+  #     # - ./temp_db:/var/lib/bluetixdb
+  #     # - /Users/timothykoh/Desktop/BlueTixRepo/bluetixService/bluetix/temp_db:/var/lib/bluetixdb
+  #     - volume1:/var/lib/bluetixdb
+  #   ports: 
+  #     - 3307:3306
+  #   environment:
+  #     MYSQL_DATABASE: bluetixdb
+  #     MYSQL_ROOT_PASSWORD: Password123
+  #   healthcheck:
+  #     test: mysqladmin ping -h 127.0.0.1 --password=$$MYSQL_ROOT_PASSWORD
+  #     interval: 5s
+  #     timeout: 5s
+  #     retries: 3
 
 networks:
   bluetix-net:
