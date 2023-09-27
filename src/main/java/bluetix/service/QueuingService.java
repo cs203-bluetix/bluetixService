@@ -1,12 +1,15 @@
 package bluetix.service;
 
+import java.util.ArrayDeque;
 import java.util.LinkedList;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public class QueuingService<T> {
+
     private final LinkedList<T> queue = new LinkedList<>();
+
 
     //TODO: change enqueue to implement priority
     public void enqueue(T item) {

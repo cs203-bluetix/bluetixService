@@ -12,13 +12,12 @@ on:
   push:
     branches: [ "main", "dev" ]
   pull_request:
-    branches: [ "main", "dev" ]
-  branch_protection_rule:
-    branches: [ "main" ]
+    branches: [ "main"]
 
 jobs:
   build:
-
+    env:
+      jwtSecret: ${{secrets.jwtSecret}}
     runs-on: ubuntu-latest
 
     steps:
@@ -30,12 +29,15 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - name: Set Environment Variable
+      run: echo $jwtSecret
     - name: Run test Cases
       run: mvn test 
     - name: Build with Maven
       id: mvnpackage
       run: mvn -B package
     - name: Build the Docker Image
+      id: builddocker
       if: steps.mvnpackage.outcome == 'success'
       run: docker build . --file Dockerfile
 
