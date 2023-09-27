@@ -34,20 +34,26 @@ public class Ticket {
     @JoinColumn(name = "section_id", referencedColumnName = "section_id", insertable=false, updatable=false)
     private Section section;
 
-
     @Column(name="price")
     @NotBlank
     private double price;
+
+//    @Column(name="transaction_addr")
+//    @NotBlank
+//    private String transaction_addr;
 
     @Column(name="num_seats_left")
     @NotBlank
     private int num_seats_left;
 	
-    public Ticket(Session session, Section section, double price, int numSeatsLeft) {
+    public Ticket(Session session, Section section, double price, int numSeatsLeft
+//    		, String transaction_addr
+    		) {
         this.session = session;
         this.section = section;
         this.price = price;
         this.num_seats_left = numSeatsLeft;
+//        this.transaction_addr = transaction_addr;
     }
 
 }
