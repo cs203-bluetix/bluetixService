@@ -18,7 +18,7 @@ import bluetix.service.StorageService;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api/file")
+@RequestMapping("/api/storage")
 public class StorageController {
 
     @Autowired
