@@ -43,7 +43,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/sessions/**").permitAll()
                         .requestMatchers("/api/sections/**").permitAll()
                         .requestMatchers("/api/ticket/**").permitAll()
-                        .requestMatchers("/api/creators/**").hasAuthority("CREATOR")
+                        .requestMatchers("/api/creators/**").permitAll()
                         .requestMatchers("/api/storage/**").permitAll()
                         .requestMatchers("/api/v1/resource").hasAuthority("CREATOR")
                         .requestMatchers("/api/secured/resource").access((authentication, context) -> {
