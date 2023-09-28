@@ -40,5 +40,6 @@ jobs:
       id: builddocker
       if: steps.mvnpackage.outcome == 'success'
       run: docker build . --file Dockerfile
+            
 
     

@@ -13,6 +13,7 @@ ENV RDS_MYSQL_HOST=bluetix-db.cnrxufwju1qq.ap-southeast-2.rds.amazonaws.com/blue
 ENV RDS_MYSQL_USER=admin
 ENV RDS_MYSQL_PASSWORD=Password123
 ENV RDS_MYSQL_PORT=3306
+ENV jwtSecret=RmdtiXkNbmt5eGU4GZBNUpfJiEffVQnU6xVjQKA6J0EZT4LQtxZOdAz0xam6i6uJ
 
 ENV S3_REGION_STATIC=ap-southeast-2
 ENV S3_BUCKET=bluetixbucket
