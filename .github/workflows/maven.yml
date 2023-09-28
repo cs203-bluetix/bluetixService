@@ -6,11 +6,11 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+name: CICD for BluetixService
 
 on:
   push:
-    branches: [ "main", "dev" ]
+    branches: [ "main",]
   pull_request:
     branches: [ "main"]
 
