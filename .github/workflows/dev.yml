@@ -1,0 +1,30 @@
+name: CI for BluetixService
+
+on:
+  push:
+    branches: [ "dev"]
+  pull_request:
+    branches: [ "dev"]
+
+jobs:
+  build:
+    env:
+      jwtSecret: ${{secrets.jwtSecret}}
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up JDK 17
+      id: jdk
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: maven
+    - name: Set Environment Variable
+      run: echo $jwtSecret
+    - name: Run test Cases
+      run: mvn test 
+    - name: Build with Maven
+      id: mvnpackage
+      run: mvn -B package
