@@ -26,6 +26,7 @@ import bluetix.model.Venue;
 import bluetix.repository.EventRepo;
 import bluetix.service.CreatorService;
 import bluetix.service.SessionService;
+import bluetix.service.StorageService;
 import jakarta.transaction.Transactional;
 
 @RestController
@@ -35,6 +36,9 @@ public class CreatorController {
 
     @Autowired
     private CreatorService creatorService;
+    
+    @Autowired
+    private StorageService storageService;
     
     @Autowired
     private EventRepo eventRepo;
@@ -47,6 +51,7 @@ public class CreatorController {
         ) {    	System.out.println("Creating Event, Session, Ticket...");
         try {
             creatorService.createEventSessionAndTicket(ticketFormDTO);
+            storageService.uploadFile(file, ticketFormDTO.getEventDTO().getImage_url(), "/events");
             System.out.println("Event, Session, Ticket Successfully Created!");
             return ResponseEntity.ok("Event and Ticket created successfully");
         } catch (Exception e) {
