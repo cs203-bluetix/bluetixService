@@ -69,5 +69,5 @@ jobs:
     - name: Stop running container
       run: ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@ec2-13-211-240-56.ap-southeast-2.compute.amazonaws.com 'sudo docker stop bluetixservice || true'; ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@ec2-13-211-240-56.ap-southeast-2.compute.amazonaws.com 'sudo docker rm bluetixservice || true'
     - name: Run new container
-      run: ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@ec2-13-211-240-56.ap-southeast-2.compute.amazonaws.com 'sudo docker run -d - name bluetixservice -p 80:8080 69iqrexgan/bluetixservice:latest'
+      run: ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@ec2-13-211-240-56.ap-southeast-2.compute.amazonaws.com 'sudo docker run -d --name bluetixservice -p 80:8080 69iqrexgan/bluetixservice:latest'
     
