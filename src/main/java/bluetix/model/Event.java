@@ -24,7 +24,7 @@ public class Event {
     @NotBlank
     private String description;
 
-    @Column(name="faq")
+    @Column(name="faq", columnDefinition = "TEXT")
     @NotBlank
     private String faq;
 
