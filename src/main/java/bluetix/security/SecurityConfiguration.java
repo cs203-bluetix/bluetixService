@@ -41,6 +41,10 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/events/**").permitAll()
                         .requestMatchers("/api/venues/**").permitAll()
                         .requestMatchers("/api/sessions/**").permitAll()
+                        .requestMatchers("/api/sections/**").permitAll()
+                        .requestMatchers("/api/ticket/**").permitAll()
+                        .requestMatchers("/api/creators/**").permitAll()
+                        .requestMatchers("/api/storage/**").permitAll()
                         .requestMatchers("/api/v1/resource").hasAuthority("CREATOR")
                         .requestMatchers("/api/secured/resource").access((authentication, context) -> {
                             boolean granted = queuingSecurityService.check(authentication, context);
