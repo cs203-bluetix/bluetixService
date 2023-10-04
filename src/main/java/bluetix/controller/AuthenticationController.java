@@ -2,6 +2,7 @@ package bluetix.controller;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -62,9 +63,14 @@ public class AuthenticationController {
 
     @PostMapping("/signin")
     @ResponseBody
-    public ResponseEntity<JwtAuthenticationResponse> signin(@RequestBody SigninRequest request,
+    public ResponseEntity signin(@RequestBody SigninRequest request,
             HttpServletResponse response) {
-        JwtAuthenticationResponse responseBody = authenticationService.signin(request);
+        JwtAuthenticationResponse responseBody;
+        try {
+            responseBody = authenticationService.signin(request);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatusCode.valueOf(401)).build();
+        }
         Cookie token = new Cookie("jwt", responseBody.getToken());
         token.setHttpOnly(true);
         // token.setSecure(true);
@@ -96,8 +102,9 @@ public class AuthenticationController {
                     .loadUserByUsername(userEmail);
             if (jwtService.isTokenValid(jwt, userDetails)) {
                 var user = userRepo.findByEmail(userEmail)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
-                return ResponseEntity.ok(JwtAuthenticationResponse.builder().email(userEmail).role(user.getDecriminatorValue()).build());
+                        .orElseThrow(() -> new IllegalArgumentException("Invalid email or password."));
+                return ResponseEntity.ok(
+                        JwtAuthenticationResponse.builder().email(userEmail).role(user.getDecriminatorValue()).build());
             }
         }
         return ResponseEntity.badRequest().body(JwtAuthenticationResponse.builder().build());
