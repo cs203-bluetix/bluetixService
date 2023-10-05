@@ -16,6 +16,7 @@ import bluetix.model.*;
 
 @RestController
 @RequestMapping("/queue")
+
 public class QueueController {
     @Autowired
     private QueuingService<User> queueService;
