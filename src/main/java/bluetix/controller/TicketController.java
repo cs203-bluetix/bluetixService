@@ -67,7 +67,7 @@ public class TicketController {
         return ticketService.findByEventVenueId(event_id, venue_id);
     }
     
-    @GetMapping("/{event_id}/{venue_id}")
+    @GetMapping("getUnique/{event_id}/{venue_id}")
     List<Ticket> getUniqueTicketByEventVenueId(@PathVariable Long event_id, @PathVariable Long venue_id) {
         return ticketService.findUniqueByEventVenueId(event_id, venue_id);
     }
