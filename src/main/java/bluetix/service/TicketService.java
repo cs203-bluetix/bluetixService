@@ -91,6 +91,10 @@ public class TicketService {
 	public List<Ticket> findByEventVenueId(Long eventId, Long venueId) {
 		return ticketRepo.findByEventVenueId(eventId, venueId);
 	}
+	
+	public List<Ticket> findUniqueByEventVenueId(Long eventId, Long venueId) {
+		return ticketRepo.findUniqueByEventVenueId(eventId, venueId);
+	}
 
 //	public Ticket updateTicket(TicketId id, Ticket updatedTicket) {
 //        Optional<Ticket> optionalTicket = ticketRepo.findById(id);

@@ -22,4 +22,7 @@ public interface TicketRepo extends JpaRepository<Ticket, TicketId>{
 	@Query(value = "SELECT * FROM ticket WHERE event_id = ?1 AND venue_id = ?2", nativeQuery = true)
 	List<Ticket> findByEventVenueId(Long eventId, Long venueId);
 	
+	@Query(value = "SELECT * FROM ticket WHERE event_id = ?1 AND venue_id = ?2 AND session_id=1", nativeQuery = true)
+	List<Ticket> findUniqueByEventVenueId(Long eventId, Long venueId);
+	
 }
