@@ -51,7 +51,7 @@ public class CreatorController {
         ) {    	System.out.println("Creating Event, Session, Ticket...");
         try {
             creatorService.createEventSessionAndTicket(ticketFormDTO);
-            storageService.uploadFile(file, ticketFormDTO.getEventDTO().getImage_url(), "/events");
+            storageService.uploadFile(file, ticketFormDTO.getEventDTO().getImage_url(), "events");
             System.out.println("Event, Session, Ticket Successfully Created!");
             return ResponseEntity.ok("Event and Ticket created successfully");
         } catch (Exception e) {

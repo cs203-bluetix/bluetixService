@@ -40,7 +40,7 @@ public class EventService {
         	throw new Exception("User is not a Creator");
         }
         Creator creator = (Creator) user;
-        Event newEvent = new Event(venue, creator, eventDTO.getName(), eventDTO.getDescription(), eventDTO.getFaq(), eventDTO.getType(), eventDTO.getTicket_pricing(), eventDTO.getAdmission_policy(), eventDTO.getImage_url());
+        Event newEvent = new Event(venue, creator, eventDTO.getName(), eventDTO.getDescription(), eventDTO.getFaq(), eventDTO.getType(), eventDTO.getTicket_pricing(), eventDTO.getAdmission_policy(), eventDTO.getImage_url()+".jpg");
         return eventRepo.save(newEvent);
     }
 
