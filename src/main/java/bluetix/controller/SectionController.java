@@ -1,6 +1,7 @@
 package bluetix.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import bluetix.exception.DataNotFoundException;
@@ -25,7 +26,8 @@ public class SectionController {
     public SectionController(SectionService sectionService) {
         this.sectionService = sectionService;
     }
-
+    
+    @Cacheable("sectionsCache")
     @GetMapping("/")
     public List<Section> getAllSections() {
         return sectionService.findAll();

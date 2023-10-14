@@ -2,6 +2,9 @@ package bluetix.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import bluetix.dto.SessionDTO;
 import bluetix.model.Event;
@@ -37,6 +40,16 @@ public class SessionService {
 //        sessionId.setEventId(eventId);
 //        sessionId.setSessionId(largest_session_id);
         return sessionRepo.save(session);
+    }
+    
+    public Session setTransAddr(Long eventId, Long sessionId, String transAddr) {
+    	Session s = null;
+    	try { 
+    		s = sessionRepo.setTransAddr(eventId, sessionId, transAddr);
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	return s;
     }
     
     public List<Session> createList(Event event, List<SessionDTO> sessionDTO) {

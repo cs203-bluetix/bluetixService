@@ -8,6 +8,7 @@ import bluetix.service.SectionService;
 import bluetix.service.SessionService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +24,8 @@ public class SessionController {
     public SessionController(SessionService sessionService) {
         this.sessionService = sessionService;
     }
-
+    
+    @Cacheable("sessionCache")
     @GetMapping
     public List<Session> getAllSessions() {
         return sessionService.findAll();
@@ -63,6 +65,11 @@ public class SessionController {
 //        session.setSessionId(nextSessionId);
         return sessionService.save(session);
     }
+    
+  @PutMapping("/updateAddr/{eventId}/{sessionId}")
+  public Session updateSession(@PathVariable Long eventId, @PathVariable Long sessionId, @RequestBody String transAddr) {
+  		return sessionService.setTransAddr(eventId, sessionId, transAddr);
+  }
 
 //
 //    @PutMapping("/{eventId}/{sessionId}")

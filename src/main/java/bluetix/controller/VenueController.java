@@ -1,5 +1,7 @@
 package bluetix.controller;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.web.bind.annotation.*;
 import bluetix.exception.DataNotFoundException;
 import bluetix.model.Venue;
@@ -31,7 +33,8 @@ public class VenueController {
     Venue createVenue(@RequestBody Venue newVenue) {
         return venueRepo.save(newVenue);
     }
-
+    
+    @Cacheable("venuesCache")
     @GetMapping
     List<Venue> getAllVenues() {
         return venueRepo.findAll();
