@@ -14,11 +14,11 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 //@EnableContextInstanceData
 public class AwsConfig {
 
-    @Value("${S3_ACCESS_KEY}")
+    @Value("AKIATZYGZYDHQ3KY6MB3")
     private String accessKey;
-    @Value("${S3_SECRET_ACCESS_KEY}")
+    @Value("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")
     private String secretAccessKey;
-    @Value("${S3_REGION_STATIC}")
+    @Value("ap-southeast-2")
     private String region;
 
     @Bean

@@ -20,7 +20,7 @@ import io.jsonwebtoken.security.Keys;
 @Service
 public class JwtServiceImpl implements JwtService {
     //TODO: Store in env
-    @Value("${jwt.secret}")
+    @Value("hellohellohellohellohellohellohellohellohellohellohellohellohellohellohello")
     private String jwtSigningKey;
     
     @Override

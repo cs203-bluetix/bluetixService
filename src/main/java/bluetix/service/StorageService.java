@@ -31,7 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class StorageService {
 	
-	@Value("${S3_BUCKET}")
+	@Value("bluetixbucket")
 	private String bucketName;
 	
 	@Autowired
