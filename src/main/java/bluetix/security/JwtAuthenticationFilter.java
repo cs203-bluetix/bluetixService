@@ -14,7 +14,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import bluetix.controller.CrossOrigin;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import bluetix.service.JwtService;
 import bluetix.service.UserService;
 

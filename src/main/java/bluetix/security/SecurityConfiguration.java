@@ -22,15 +22,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.expression.WebExpressionAuthorizationManager;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
-import bluetix.controller.CrossOrigin;
 import bluetix.service.*;
 
 import lombok.RequiredArgsConstructor;
 
 @Configuration
-@EnableWebSecurity
 @CrossOrigin(origins = "*")
+@EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
