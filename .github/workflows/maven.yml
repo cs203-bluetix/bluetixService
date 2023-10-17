@@ -17,7 +17,7 @@ on:
 jobs:
   build:
     env:
-      jwtSecret: ${{secrets.jwtSecret}}
+      JWT_SECRET: ${{secrets.JWT_SECRET}}
     runs-on: ubuntu-latest
 
     steps:
