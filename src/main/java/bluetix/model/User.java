@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING)
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements UserDetails {
+public class User implements UserDetails{
     @Id
     @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)

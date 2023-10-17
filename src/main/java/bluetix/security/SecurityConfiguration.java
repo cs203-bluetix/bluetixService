@@ -39,6 +39,7 @@ public class SecurityConfiguration {
     @Autowired
     public SecurityFilterChain securityFilterChain(HttpSecurity http, QueuingSecurityService queuingSecurityService) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
+                .cors(cors-> cors.disable())
                 .authorizeHttpRequests(request -> request.requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/events/**").permitAll()
                         .requestMatchers("/api/venues/**").permitAll()
