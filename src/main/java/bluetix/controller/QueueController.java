@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import bluetix.model.*;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/queue")
 

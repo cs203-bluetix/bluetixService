@@ -14,6 +14,7 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import bluetix.controller.CrossOrigin;
 import bluetix.service.JwtService;
 import bluetix.service.UserService;
 
@@ -26,6 +27,7 @@ import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Component
+@CrossOrigin(origins = "*")
 @AllArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
