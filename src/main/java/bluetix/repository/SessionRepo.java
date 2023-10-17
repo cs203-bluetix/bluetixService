@@ -21,4 +21,7 @@ public interface SessionRepo extends JpaRepository<Session, SessionId> {
 	@Query(value = "SELECT MAX(session_id) AS largest FROM session WHERE event_id = ?;", nativeQuery = true)
 	Long getLargestSessionByEventId(Long eventId);
 	
+	@Query(value = "UPDATE session SET transaction_addr = ?3 WHERE session_id = ?2 AND eventId = ?1", nativeQuery = true)
+	Session setTransAddr(Long eventId, Long sessionId, String transAddr);
+	
 }

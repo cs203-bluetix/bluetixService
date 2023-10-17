@@ -86,6 +86,15 @@ public class TicketService {
 	public void deleteById(TicketId id) {
 		ticketRepo.deleteById(id);
 	}
+	
+	// Retrieve sessions for a specific event
+	public List<Ticket> findByEventVenueId(Long eventId, Long venueId) {
+		return ticketRepo.findByEventVenueId(eventId, venueId);
+	}
+	
+	public List<Long> findUniqueByEventVenueId(Long eventId, Long venueId) {
+		return ticketRepo.findUniqueByEventVenueId(eventId, venueId);
+	}
 
 //	public Ticket updateTicket(TicketId id, Ticket updatedTicket) {
 //        Optional<Ticket> optionalTicket = ticketRepo.findById(id);

@@ -3,6 +3,7 @@ package bluetix.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 import bluetix.model.User;
 import bluetix.repository.UserRepo;
@@ -25,7 +26,8 @@ public class UserController {
     List<User> getAllUsers() {
         return userRepo.findAll();
     }
-
+    
+    @Cacheable("usersCache")
     @GetMapping("/{id}")
     User getUserById(@PathVariable Long id) {
         return userRepo.findById(id).orElse(null);
