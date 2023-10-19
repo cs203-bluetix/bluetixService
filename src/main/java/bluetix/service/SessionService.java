@@ -16,6 +16,7 @@ import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import jakarta.transaction.Transactional;
 
 @Service
 public class SessionService {
@@ -42,6 +43,7 @@ public class SessionService {
         return sessionRepo.save(session);
     }
     
+    @Transactional
     public void setTransAddr(Long eventId, Long sessionId, String transAddr) {
     	try { 
     		sessionRepo.setTransAddr(eventId, sessionId, transAddr);
