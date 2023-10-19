@@ -24,6 +24,6 @@ public interface SessionRepo extends JpaRepository<Session, SessionId> {
 	
 	@Modifying
 	@Query(value = "UPDATE session SET transaction_addr = ?3 WHERE session_id = ?2 AND event_id = ?1", nativeQuery = true)
-	Session setTransAddr(Long eventId, Long sessionId, String transAddr);
+	void setTransAddr(Long eventId, Long sessionId, String transAddr);
 	
 }

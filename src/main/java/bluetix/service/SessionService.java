@@ -42,14 +42,12 @@ public class SessionService {
         return sessionRepo.save(session);
     }
     
-    public Session setTransAddr(Long eventId, Long sessionId, String transAddr) {
-    	Session s = null;
+    public void setTransAddr(Long eventId, Long sessionId, String transAddr) {
     	try { 
-    		s = sessionRepo.setTransAddr(eventId, sessionId, transAddr);
+    		sessionRepo.setTransAddr(eventId, sessionId, transAddr);
     	} catch (Exception e) {
     		e.printStackTrace();
     	}
-    	return s;
     }
     
     public List<Session> createList(Event event, List<SessionDTO> sessionDTO) {
