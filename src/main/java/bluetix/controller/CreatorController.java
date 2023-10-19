@@ -56,7 +56,7 @@ public class CreatorController {
             return ResponseEntity.ok("Event and Ticket created successfully");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                .body("Failed to create Event and Ticket: " + e.getMessage());
+                .body("Failed to create Event and Ticket: " + e.toString());
         }
     }
     
