@@ -36,10 +36,10 @@ public class EventService {
     	Venue venue = venueRepo.findById(venue_id).orElse(null);
         User user = (User) userRepo.findById(user_id)
                 .orElseThrow(EntityNotFoundException::new);
-        if(user.getDecriminatorValue().equals("CUSTOMER")) {
-        	System.out.println("Suss..Imposter!");
-        	throw new Exception("CUSTOMER is not a Creator");
-        }
+//        if(user.getDecriminatorValue().equals("CUSTOMER")) {
+//        	System.out.println("Suss..Imposter!");
+//        	throw new Exception("CUSTOMER is not a Creator");
+//        }
         Creator creator = (Creator) user;
         Event newEvent = new Event(venue, creator, eventDTO.getName(), eventDTO.getDescription(), eventDTO.getFaq(), eventDTO.getType(), eventDTO.getTicket_pricing(), eventDTO.getAdmission_policy(), eventDTO.getImage_url()+".jpg");
         return eventRepo.save(newEvent);
