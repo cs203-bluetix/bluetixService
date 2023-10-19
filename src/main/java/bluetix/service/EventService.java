@@ -37,7 +37,7 @@ public class EventService {
         User user = (User) userRepo.findById(user_id)
                 .orElseThrow(EntityNotFoundException::new);
         if(user.getDecriminatorValue().equals("CUSTOMER")) {
-        	System.out.println("Suss..Imposter!")
+        	System.out.println("Suss..Imposter!");
         	throw new Exception("CUSTOMER is not a Creator");
         }
         Creator creator = (Creator) user;
