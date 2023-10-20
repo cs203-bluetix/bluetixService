@@ -67,8 +67,8 @@ public class SessionController {
     }
     
   @PutMapping("/updateAddr/{eventId}/{sessionId}")
-  public Session updateSession(@PathVariable Long eventId, @PathVariable Long sessionId, @RequestBody String transAddr) {
-  		return sessionService.setTransAddr(eventId, sessionId, transAddr);
+  public void updateSession(@PathVariable Long eventId, @PathVariable Long sessionId, @RequestBody String transAddr) {
+  		sessionService.setTransAddr(eventId, sessionId, transAddr);
   }
 
 //
