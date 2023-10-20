@@ -28,9 +28,9 @@ public class QueueController {
     @Autowired
     private EventRepo eventRepo;
 
-    @PostMapping("/join/{sessionId}/{eventId}")
-    public ResponseEntity<String> joinQueue(@AuthenticationPrincipal User user, @PathVariable Long sessionId,
-            @PathVariable Long eventId) {
+    @PostMapping("/join/{eventId}/{sessionId}")
+    public ResponseEntity<String> joinQueue(@PathVariable("eventId") Long eventId,
+            @PathVariable("sessionId") Long sessionId, @AuthenticationPrincipal User user) {
         try {
             Event event = eventRepo.getReferenceById(eventId);
             SessionId sessionId2 = new SessionId(sessionId, event);
