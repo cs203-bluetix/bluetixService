@@ -34,6 +34,7 @@ public class QueueController {
         try {
             Event event = eventRepo.getReferenceById(eventId);
             SessionId sessionId2 = new SessionId(sessionId, event);
+            queueService.initializeQueueForSession(sessionId2);
             queueService.addUserToQueue(sessionId2, user);
         } catch (Exception e) {
             // TODO: handle exception
