@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class QueuingService<T> {
 
+    // T should be a comparable, to add a priority score to users in a separate class?
+
     private final PriorityQueue<T> queue = new PriorityQueue<>();
     private final List<T> inService = new ArrayList<>();
 
