@@ -36,11 +36,12 @@ public class QueueController {
             SessionId sessionId2 = new SessionId(sessionId, event);
             queueService.initializeQueueForSession(sessionId2);
             queueService.addUserToQueue(sessionId2, user);
+            return ResponseEntity.ok("Joined the queue.");
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
         }
-        return ResponseEntity.ok("Joined the queue.");
     }
 
     // @GetMapping("/position")
