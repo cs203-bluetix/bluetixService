@@ -2,8 +2,6 @@ package bluetix.controller;
 
 import bluetix.service.*;
 
-import java.util.ArrayDeque;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import bluetix.model.*;
 import bluetix.repository.EventRepo;
 import bluetix.serializable.SessionId;
-import bluetix.service.QueueManagementService;
 
 @RestController
 @CrossOrigin(origins = "*")
