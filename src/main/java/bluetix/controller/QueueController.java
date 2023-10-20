@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import bluetix.model.*;
 import bluetix.repository.EventRepo;
 import bluetix.serializable.SessionId;
+import bluetix.service.QueueManagementService;
 
 @RestController
 @CrossOrigin(origins = "*")
