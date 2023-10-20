@@ -29,9 +29,9 @@ public class QueueController {
         return ResponseEntity.ok("Joined the queue.");
     }
 
-    @GetMapping("/position")
-    public ResponseEntity<Integer> getPositionInQueue(@AuthenticationPrincipal User user) {
-        int position = queueService.getPosition(user);
-        return ResponseEntity.ok(position);
-    }
+    // @GetMapping("/position")
+    // public ResponseEntity<Integer> getPositionInQueue(@AuthenticationPrincipal User user) {
+    //     int position = queueService.getPosition(user);
+    //     return ResponseEntity.ok(position);
+    // }
 }

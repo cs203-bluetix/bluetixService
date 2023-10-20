@@ -1,31 +1,39 @@
 package bluetix.service;
 
-import java.util.ArrayDeque;
-import java.util.LinkedList;
+import java.util.*;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public class QueuingService<T> {
 
-    private final LinkedList<T> queue = new LinkedList<>();
+    private final PriorityQueue<T> queue = new PriorityQueue<>();
+    private final List<T> inService = new ArrayList<>();
 
-
-    //TODO: change enqueue to implement priority
+    // TODO: change enqueue to implement priority
     public void enqueue(T item) {
-        if(!queue.contains(item))
-        queue.addLast(item);
+        if (!queue.contains(item) && !inService.contains(item))
+            queue.offer(item);
     }
 
     public T dequeue() {
         return queue.poll();
     }
 
-    public boolean isEmpty() {
-        return queue.isEmpty();
+    public void moveToService() {
+        inService.add(queue.poll());
     }
 
-    public int getPosition(T item){
-        return queue.indexOf(item);
+    public void removeFromService(T object) {
+        inService.remove(object);
+    }
+
+    public boolean isEmpty() {
+        return queue.isEmpty() && inService.isEmpty();
+    }
+
+    public int getPosition(T item) {
+        // return queue.(item);
+        return 1;
     }
 }

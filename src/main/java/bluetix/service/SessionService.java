@@ -21,6 +21,9 @@ import java.util.List;
 public class SessionService {
     private final SessionRepo sessionRepo;
 
+	@Autowired
+	private final QueuingService queue;
+
     @Autowired
     public SessionService(SessionRepo sessionRepository) {
         this.sessionRepo = sessionRepository;
