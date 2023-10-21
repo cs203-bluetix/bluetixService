@@ -87,8 +87,8 @@ public class SessionService {
 		sessionRepo.deleteById(id);
 	}
 
-	public Session findById(SessionId sessionId) {
-		return sessionRepo.findById(sessionId.getEvent().getEventId(), sessionId.getSessionId());
+	public Session findById(Long eventId, Long sessionId) {
+		return sessionRepo.findById(eventId, sessionId);
 		// TODO Auto-generated method stub
 	}
 

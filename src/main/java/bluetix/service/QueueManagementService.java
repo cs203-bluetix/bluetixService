@@ -30,13 +30,13 @@ public class QueueManagementService {
         }
     }
 
-    public void initializeQueueForSession(SessionId sessionId) {
-        Session session = this.sessionService.findById(sessionId);
+    public void initializeQueueForSession(Long eventId ,Long sessionId) {
+        Session session = this.sessionService.findById(eventId ,sessionId);
         this.sessionToQueueMap.put(session, new QueuingService<>());
     }
 
-    public void addUserToQueue(SessionId sessionId, User user){
-        Session session = this.sessionService.findById(sessionId);
+    public void addUserToQueue(Long eventId, Long sessionId, User user){
+        Session session = this.sessionService.findById(eventId, sessionId);
         QueuingService<User> queue = this.sessionToQueueMap.get(session);
         queue.enqueue(user);
     }

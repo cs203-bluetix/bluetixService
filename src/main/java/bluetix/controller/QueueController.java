@@ -32,10 +32,8 @@ public class QueueController {
     public ResponseEntity<String> joinQueue(@PathVariable("eventId") Long eventId,
             @PathVariable("sessionId") Long sessionId, @AuthenticationPrincipal User user) {
         try {
-            Event event = eventRepo.getReferenceById(eventId);
-            SessionId sessionId2 = new SessionId(sessionId, event);
-            queueService.initializeQueueForSession(sessionId2);
-            queueService.addUserToQueue(sessionId2, user);
+            queueService.initializeQueueForSession(eventId, sessionId);
+            queueService.addUserToQueue(eventId, sessionId, user);
             return ResponseEntity.ok("Joined the queue.");
         } catch (Exception e) {
             // TODO: handle exception
