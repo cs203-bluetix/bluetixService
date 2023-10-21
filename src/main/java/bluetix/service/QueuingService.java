@@ -26,7 +26,7 @@ public class QueuingService<T extends Comparable<T>> {
     public void enqueue(T item) {
         if (!inQueueOrService(item))
             queue.offer(item);
-        else{
+        else {
             System.out.println("tf??");
             throw new RuntimeException();
         }
@@ -36,7 +36,7 @@ public class QueuingService<T extends Comparable<T>> {
         return (queue.contains(item) || service.contains(item));
     }
 
-    public boolean inService(T item){
+    public boolean inService(T item) {
         return service.contains(item);
     }
 
@@ -55,7 +55,10 @@ public class QueuingService<T extends Comparable<T>> {
     }
 
     public void removeFromService(T object) {
-        service.remove(object);
+        if (service.contains(object))
+            service.remove(object);
+        else
+            throw new RuntimeException();
     }
 
     public boolean isEmpty() {

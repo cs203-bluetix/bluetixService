@@ -55,4 +55,10 @@ public class QueueManagementService {
         queue.inService(user);
     }
 
+    public void leaveQueue(Long eventId, Long sessionId, User user) {
+        Session session = this.sessionService.findById(eventId, sessionId);
+        QueuingService<User> queue = this.sessionToQueueMap.get(session);
+        queue.removeFromService(user);
+    }
+
 }

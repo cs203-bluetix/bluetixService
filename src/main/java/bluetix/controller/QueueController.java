@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import bluetix.model.*;
 import bluetix.repository.EventRepo;
@@ -34,7 +35,7 @@ public class QueueController {
         try {
             queueService.initializeQueueForSession(eventId, sessionId);
             queueService.addUserToQueue(eventId, sessionId, user);
-            return ResponseEntity.ok("Joined the queue.");
+            return ResponseEntity.ok(user.getEmail() + " Joined the queue.");
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
@@ -42,6 +43,18 @@ public class QueueController {
         }
     }
 
+    @DeleteMapping("leaveQueue/{eventId}/{sessionId}")
+    public ResponseEntity<String> leaveQueue(@PathVariable("eventId") Long eventId,
+            @PathVariable("sessionId") Long sessionId, @AuthenticationPrincipal User user) {
+        try {
+            queueService.initializeQueueForSession(eventId, sessionId, user);
+            return ResponseEntity.ok(user.getEmail() + " Left the queue.");
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            return ResponseEntity.unprocessableEntity().build();
+        }
+    }
     // @GetMapping("/position")
     // public ResponseEntity<Integer> getPositionInQueue(@AuthenticationPrincipal
     // User user) {
