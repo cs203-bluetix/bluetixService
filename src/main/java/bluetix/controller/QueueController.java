@@ -33,8 +33,8 @@ public class QueueController {
     public ResponseEntity<String> joinQueue(@PathVariable("eventId") Long eventId,
             @PathVariable("sessionId") Long sessionId, @AuthenticationPrincipal User user) {
         try {
-            queueService.initializeQueueForSession(eventId, sessionId);
-            queueService.addUserToQueue(eventId, sessionId, user);
+            this.queueService.initializeQueueForSession(eventId, sessionId);
+            this.queueService.addUserToQueue(eventId, sessionId, user);
             
             return ResponseEntity.ok(user.getEmail() + " Joined the queue.");
         } catch (Exception e) {
@@ -48,7 +48,7 @@ public class QueueController {
     public ResponseEntity<String> checkInQueue(@PathVariable("eventId") Long eventId,
             @PathVariable("sessionId") Long sessionId, @AuthenticationPrincipal User user) {
         try {
-            boolean status = queueService.checkUserInQueue(eventId, sessionId, user);
+            boolean status = this.queueService.checkUserInQueue(eventId, sessionId, user);
             return ResponseEntity.ok("" + status);
         } catch (Exception e) {
             // TODO: handle exception
@@ -61,7 +61,7 @@ public class QueueController {
     public ResponseEntity<String> leaveQueue(@PathVariable("eventId") Long eventId,
             @PathVariable("sessionId") Long sessionId, @AuthenticationPrincipal User user) {
         try {
-            queueService.leaveQueue(eventId, sessionId, user);
+            this.queueService.leaveQueue(eventId, sessionId, user);
             return ResponseEntity.ok(user.getEmail() + " Left the queue.");
         } catch (Exception e) {
             // TODO: handle exception
