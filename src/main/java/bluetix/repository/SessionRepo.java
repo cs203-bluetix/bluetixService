@@ -16,7 +16,7 @@ public interface SessionRepo extends JpaRepository<Session, SessionId> {
 	@Query(value = "SELECT * FROM session WHERE event_id = ?;", nativeQuery = true)
 	List<Session> findByEventId(Long eventId);
 
-	@Query(value = "SELECT * FROM session WHERE event_id = ?1 AND session_id = ?2;", nativeQuery = true)
+	@Query(value = "SELECT * FROM session WHERE event_id = ?1 AND session_id = ?2", nativeQuery = true)
 	Session findById(Long eventId, Long sessionId);
 
 	@Query(value = "SELECT MAX(session_id) AS largest FROM session WHERE event_id = ?;", nativeQuery = true)
