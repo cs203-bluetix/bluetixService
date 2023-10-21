@@ -47,7 +47,7 @@ public class QueueController {
     public ResponseEntity<String> leaveQueue(@PathVariable("eventId") Long eventId,
             @PathVariable("sessionId") Long sessionId, @AuthenticationPrincipal User user) {
         try {
-            queueService.initializeQueueForSession(eventId, sessionId, user);
+            queueService.leaveQueue(eventId, sessionId, user);
             return ResponseEntity.ok(user.getEmail() + " Left the queue.");
         } catch (Exception e) {
             // TODO: handle exception
