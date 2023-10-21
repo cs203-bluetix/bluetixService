@@ -43,10 +43,10 @@ public class QueueManagementService {
         queue.enqueue(user);
     }
 
-    public void checkUserInQueue(Long eventId, Long sessionId, User user) {
+    public boolean checkUserInQueue(Long eventId, Long sessionId, User user) {
         Session session = this.sessionService.findById(eventId, sessionId);
         QueuingService<User> queue = this.sessionToQueueMap.get(session);
-        queue.inQueueOrService(user);
+        return queue.inQueueOrService(user);
     }
 
     public void checkUserInService(Long eventId, Long sessionId, User user) {

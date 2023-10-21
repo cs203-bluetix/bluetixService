@@ -14,7 +14,7 @@ public class QueuingService<T extends Comparable<T>> {
     // class?
 
     private final PriorityQueue<T> queue = new PriorityQueue<>();
-    private final List<T> service = new ArrayList<>();
+    private final Map<T, Long> service = new HashMap<>();
 
     public QueuingService() {
         // Schedule the draining task to run every 5 seconds (adjust as needed)
@@ -33,11 +33,11 @@ public class QueuingService<T extends Comparable<T>> {
     }
 
     public boolean inQueueOrService(T item) {
-        return (queue.contains(item) || service.contains(item));
+        return (queue.contains(item) || service.containsKey(item));
     }
 
     public boolean inService(T item) {
-        return service.contains(item);
+        return service.containsKey(item);
     }
 
     public T dequeue() {
@@ -45,17 +45,30 @@ public class QueuingService<T extends Comparable<T>> {
     }
 
     public void moveToService() {
-        this.service.add(this.dequeue());
+        T item = this.dequeue();
+        service.put(item, System.currentTimeMillis());
     }
 
     public void drainQueue() {
+        long currentTime = System.currentTimeMillis();
+        Iterator<Map.Entry<T, Long>> iterator = service.entrySet().iterator();
         while (this.service.size() < 50 && !this.queue.isEmpty()) {
             moveToService();
+        }
+        while(iterator.hasNext()){
+            Map.Entry<T, Long> entry = iterator.next();
+            T item = entry.getKey();
+            long timestamp = entry.getValue();
+
+            if (currentTime - timestamp > TimeUnit.MINUTES.toMillis(5)) {
+                // Remove items that have been in service for more than 5 minutes
+                iterator.remove();
+            }
         }
     }
 
     public void removeFromService(T object) {
-        if (service.contains(object))
+        if (service.containsKey(object))
             service.remove(object);
         else
             throw new RuntimeException();

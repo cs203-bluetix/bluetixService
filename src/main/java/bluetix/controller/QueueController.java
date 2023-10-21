@@ -43,7 +43,20 @@ public class QueueController {
         }
     }
 
-    @DeleteMapping("leaveQueue/{eventId}/{sessionId}")
+    @GetMapping("/status/{eventId}/{sessionId}")
+    public ResponseEntity<String> checkInQueue(@PathVariable("eventId") Long eventId,
+            @PathVariable("sessionId") Long sessionId, @AuthenticationPrincipal User user) {
+        try {
+            boolean status = queueService.checkUserInQueue(eventId, sessionId, user);
+            return ResponseEntity.ok("" + status);
+        } catch (Exception e) {
+            // TODO: handle exception
+            e.printStackTrace();
+            return ResponseEntity.unprocessableEntity().build();
+        }
+    }
+
+    @DeleteMapping("/leaveQueue/{eventId}/{sessionId}")
     public ResponseEntity<String> leaveQueue(@PathVariable("eventId") Long eventId,
             @PathVariable("sessionId") Long sessionId, @AuthenticationPrincipal User user) {
         try {
