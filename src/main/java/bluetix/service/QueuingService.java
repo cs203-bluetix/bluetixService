@@ -26,8 +26,10 @@ public class QueuingService<T extends Comparable<T>> {
     public void enqueue(T item) {
         if (!inQueueOrService(item))
             queue.offer(item);
-        else
+        else{
+            System.out.println("tf??");
             throw new RuntimeException();
+        }
     }
 
     public boolean inQueueOrService(T item) {
