@@ -22,12 +22,12 @@ import bluetix.serializable.SessionId;
 @RequestMapping("/queue")
 
 public class QueueController {
-    @Autowired
     private QueueManagementService queueService;
+
     @Autowired
-    private SessionService sessionService;
-    @Autowired
-    private EventRepo eventRepo;
+    public QueueController(QueueManagementService queueService) {
+        this.queueService = queueService;
+    }
 
     @PostMapping("/join/{eventId}/{sessionId}")
     public ResponseEntity<String> joinQueue(@PathVariable("eventId") Long eventId,
@@ -35,6 +35,7 @@ public class QueueController {
         try {
             queueService.initializeQueueForSession(eventId, sessionId);
             queueService.addUserToQueue(eventId, sessionId, user);
+            
             return ResponseEntity.ok(user.getEmail() + " Joined the queue.");
         } catch (Exception e) {
             // TODO: handle exception
