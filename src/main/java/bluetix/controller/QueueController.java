@@ -38,7 +38,7 @@ public class QueueController {
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();
-            return ResponseEntity.internalServerError().build();
+            return ResponseEntity.unprocessableEntity().build();
         }
     }
 

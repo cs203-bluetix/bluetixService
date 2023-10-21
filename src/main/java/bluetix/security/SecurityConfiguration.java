@@ -49,10 +49,6 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/creators/**").permitAll()
                         .requestMatchers("/api/storage/**").permitAll()
                         .requestMatchers("/api/v1/resource").hasAuthority("CREATOR")
-                        .requestMatchers("/api/secured/resource").access((authentication, context) -> {
-                            boolean granted = queuingSecurityService.check(authentication, context);
-                            return new AuthorizationDecision(granted);
-                        })
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(

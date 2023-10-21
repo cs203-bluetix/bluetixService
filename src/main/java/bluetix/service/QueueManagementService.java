@@ -30,15 +30,29 @@ public class QueueManagementService {
         }
     }
 
-    public void initializeQueueForSession(Long eventId ,Long sessionId) {
-        Session session = this.sessionService.findById(eventId ,sessionId);
-        this.sessionToQueueMap.put(session, new QueuingService<>());
+    public void initializeQueueForSession(Long eventId, Long sessionId) {
+        Session session = this.sessionService.findById(eventId, sessionId);
+        if (this.sessionToQueueMap.get(session) == null) {
+            this.sessionToQueueMap.put(session, new QueuingService<>());
+        }
     }
 
-    public void addUserToQueue(Long eventId, Long sessionId, User user){
+    public void addUserToQueue(Long eventId, Long sessionId, User user) {
         Session session = this.sessionService.findById(eventId, sessionId);
         QueuingService<User> queue = this.sessionToQueueMap.get(session);
         queue.enqueue(user);
+    }
+
+    public void checkUserInQueue(Long eventId, Long sessionId, User user) {
+        Session session = this.sessionService.findById(eventId, sessionId);
+        QueuingService<User> queue = this.sessionToQueueMap.get(session);
+        queue.inQueueOrService(user);
+    }
+
+    public void checkUserInService(Long eventId, Long sessionId, User user) {
+        Session session = this.sessionService.findById(eventId, sessionId);
+        QueuingService<User> queue = this.sessionToQueueMap.get(session);
+        queue.inService(user);
     }
 
 }
