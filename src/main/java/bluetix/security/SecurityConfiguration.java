@@ -37,7 +37,7 @@ public class SecurityConfiguration {
     private final UserService userService;
     @Bean
     @Autowired
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, QueuingSecurityService queuingSecurityService) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(cors-> cors.disable())
                 .authorizeHttpRequests(request -> request.requestMatchers("/api/auth/**").permitAll()
