@@ -35,7 +35,6 @@ public class QueueController {
         try {
             this.queueService.initializeQueueForSession(eventId, sessionId);
             this.queueService.addUserToQueue(eventId, sessionId, user);
-            
             return ResponseEntity.ok(user.getEmail() + " Joined the queue.");
         } catch (Exception e) {
             // TODO: handle exception

@@ -12,7 +12,6 @@ import bluetix.model.Session;
 import bluetix.model.User;
 import bluetix.serializable.SessionId;
 
-
 @Service
 public class QueueManagementService {
 
@@ -43,12 +42,15 @@ public class QueueManagementService {
 
     public void addUserToQueue(Long eventId, Long sessionId, User user) {
         Session session = this.sessionService.findById(eventId, sessionId);
+    System.out.println(session.getSessionId());
+
         QueuingService<User> queue = this.sessionToQueueMap.get(session);
         queue.enqueue(user);
     }
 
     public boolean checkUserInQueue(Long eventId, Long sessionId, User user) {
         Session session = this.sessionService.findById(eventId, sessionId);
+    System.out.println(session.getSessionId());
         QueuingService<User> queue = this.sessionToQueueMap.get(session);
         return queue.inQueueOrService(user);
     }
