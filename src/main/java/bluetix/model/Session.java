@@ -10,10 +10,10 @@ import bluetix.serializable.SessionId;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Data
 @Entity
 @Getter @Setter @NoArgsConstructor
 @IdClass(SessionId.class)
+@EqualsAndHashCode(of = {"sessionId", "event"})
 public class Session {
 
 	@Id
@@ -51,4 +51,6 @@ public class Session {
 	    this.transaction_addr = transactionAddr;
 	    this.event = event;
 	}
+
+
 }

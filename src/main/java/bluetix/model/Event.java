@@ -7,6 +7,7 @@ import java.util.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@EqualsAndHashCode(of = {"eventId"})
 @Entity
 @Getter @Setter @NoArgsConstructor
 public class Event {

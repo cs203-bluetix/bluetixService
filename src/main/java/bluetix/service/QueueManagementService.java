@@ -16,6 +16,7 @@ import bluetix.serializable.SessionId;
 public class QueueManagementService {
 
     private final SessionService sessionService;
+    
 
     private final HashMap<Session, QueuingService<User>> sessionToQueueMap = new HashMap<>();
 
