@@ -48,7 +48,6 @@ public class QueueController {
     public ResponseEntity<String> checkInQueue(@PathVariable("eventId") Long eventId,
             @PathVariable("sessionId") Long sessionId, @AuthenticationPrincipal User user) {
         try {
-            this.queueService.initializeQueueForSession(eventId, sessionId);
             boolean status = this.queueService.checkUserInQueue(eventId, sessionId, user);
             return ResponseEntity.ok("" + status);
         } catch (Exception e) {
@@ -62,7 +61,6 @@ public class QueueController {
     public ResponseEntity<String> leaveQueue(@PathVariable("eventId") Long eventId,
             @PathVariable("sessionId") Long sessionId, @AuthenticationPrincipal User user) {
         try {
-            this.queueService.initializeQueueForSession(eventId, sessionId);
             this.queueService.leaveQueue(eventId, sessionId, user);
             return ResponseEntity.ok(user.getEmail() + " Left the queue.");
         } catch (Exception e) {
