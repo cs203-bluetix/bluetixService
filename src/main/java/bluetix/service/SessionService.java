@@ -23,13 +23,10 @@ import jakarta.transaction.Transactional;
 public class SessionService {
 	private final SessionRepo sessionRepo;
 
-	@Autowired
-	private final QueuingService<User> queue;
 
 	@Autowired
 	public SessionService(SessionRepo sessionRepository) {
 		this.sessionRepo = sessionRepository;
-		this.queue = new QueuingService<>();
 	}
 
 	public List<Session> findAll() {
