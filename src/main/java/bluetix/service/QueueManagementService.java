@@ -5,16 +5,19 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.util.Pair;
 import org.springframework.stereotype.Service;
 
 import bluetix.model.Session;
 import bluetix.model.User;
 import bluetix.serializable.SessionId;
 
+
 @Service
 public class QueueManagementService {
 
     private final SessionService sessionService;
+
     private final HashMap<Session, QueuingService<User>> sessionToQueueMap = new HashMap<>();
 
     @Autowired
@@ -31,8 +34,10 @@ public class QueueManagementService {
 
     public void initializeQueueForSession(Long eventId, Long sessionId) {
         Session session = this.sessionService.findById(eventId, sessionId);
-        if (this.sessionToQueueMap.get(session) == null) {
-            this.sessionToQueueMap.put(session, new QueuingService<>());
+        if (session != null) {
+            if (this.sessionToQueueMap.get(session) == null) {
+                this.sessionToQueueMap.put(session, new QueuingService<>());
+            }
         }
     }
 

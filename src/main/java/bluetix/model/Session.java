@@ -10,6 +10,7 @@ import bluetix.serializable.SessionId;
 import jakarta.persistence.*;
 import lombok.*;
 
+@Data
 @Entity
 @Getter @Setter @NoArgsConstructor
 @IdClass(SessionId.class)
