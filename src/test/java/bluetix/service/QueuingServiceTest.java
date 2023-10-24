@@ -19,7 +19,7 @@ public class QueuingServiceTest {
 
     @Test
     void testEnqueue() {
-        QueuingService<Integer> queue = new QueuingService<>();
+        QueuingService<Integer> queue = new QueuingService<>(4);
         queue.enqueue(2);
         queue.enqueue(3);
         assertEquals(false, queue.inService(2));

@@ -25,18 +25,13 @@ public class QueueManagementService {
         this.sessionService = sessionService;
     }
 
-    public void initializeQueueForEvent(Long event_id) {
-        List<Session> allSession = this.sessionService.findByEventId(event_id);
-        for (Session s : allSession) {
-            this.sessionToQueueMap.put(s, new QueuingService<>());
-        }
-    }
 
     public void initializeQueueForSession(Long eventId, Long sessionId) {
         Session session = this.sessionService.findById(eventId, sessionId);
         if (session != null) {
             if (this.sessionToQueueMap.get(session) == null) {
-                this.sessionToQueueMap.put(session, new QueuingService<>());
+                
+                this.sessionToQueueMap.put(session, new QueuingService<>(session.getTicket().size()));
             }
         }
     }
