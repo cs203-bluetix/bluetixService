@@ -81,9 +81,12 @@ public class QueuingService {
         }
     }
 
-    public void removeFromService(User object) {
-        if (service.containsKey(object))
-            service.remove(object);
+    public void removeFromService(User user) {
+        if (service.containsKey(user)){
+            service.remove(user);
+            user.setFailedPurchases(0);
+            this.userRepo.save(user);
+        }
         else
             throw new RuntimeException();
     }
