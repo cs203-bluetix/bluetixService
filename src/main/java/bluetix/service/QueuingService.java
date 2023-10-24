@@ -16,10 +16,13 @@ public class QueuingService<T extends Comparable<T>> {
     private final PriorityQueue<T> queue = new PriorityQueue<>();
     private final Map<T, Long> service = new HashMap<>();
 
-    public QueuingService() {
+    private int ticketCount;
+
+    public QueuingService(int ticketCount) {
         // Schedule the draining task to run every 5 seconds (adjust as needed)
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(this::drainQueue, 0, 5, TimeUnit.SECONDS);
+        this.ticketCount = ticketCount;
     }
 
     // TODO: change enqueue to implement priority
@@ -52,7 +55,7 @@ public class QueuingService<T extends Comparable<T>> {
     public void drainQueue() {
         long currentTime = System.currentTimeMillis();
         Iterator<Map.Entry<T, Long>> iterator = service.entrySet().iterator();
-        while (this.service.size() < 50 && !this.queue.isEmpty()) {
+        while (this.service.size() < ticketCount && !this.queue.isEmpty()) {
             moveToService();
         }
         while(iterator.hasNext()){
