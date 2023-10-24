@@ -18,7 +18,7 @@ public class QueueManagementService {
     private final SessionService sessionService;
     
 
-    private final HashMap<Session, QueuingService<User>> sessionToQueueMap = new HashMap<>();
+    private final HashMap<Session, QueuingService> sessionToQueueMap = new HashMap<>();
 
     @Autowired
     public QueueManagementService(SessionService sessionService) {
@@ -31,7 +31,7 @@ public class QueueManagementService {
         if (session != null) {
             if (this.sessionToQueueMap.get(session) == null) {
                 
-                this.sessionToQueueMap.put(session, new QueuingService<>(session.getTicket().size()));
+                this.sessionToQueueMap.put(session, new QueuingService(session.getTicket().size()));
             }
         }
     }
@@ -40,26 +40,26 @@ public class QueueManagementService {
         Session session = this.sessionService.findById(eventId, sessionId);
     System.out.println(session.getSessionId());
 
-        QueuingService<User> queue = this.sessionToQueueMap.get(session);
+        QueuingService queue = this.sessionToQueueMap.get(session);
         queue.enqueue(user);
     }
 
     public boolean checkUserInQueue(Long eventId, Long sessionId, User user) {
         Session session = this.sessionService.findById(eventId, sessionId);
     System.out.println(session.getSessionId());
-        QueuingService<User> queue = this.sessionToQueueMap.get(session);
+        QueuingService queue = this.sessionToQueueMap.get(session);
         return queue.inQueueOrService(user);
     }
 
     public void checkUserInService(Long eventId, Long sessionId, User user) {
         Session session = this.sessionService.findById(eventId, sessionId);
-        QueuingService<User> queue = this.sessionToQueueMap.get(session);
+        QueuingService queue = this.sessionToQueueMap.get(session);
         queue.inService(user);
     }
 
     public void leaveQueue(Long eventId, Long sessionId, User user) {
         Session session = this.sessionService.findById(eventId, sessionId);
-        QueuingService<User> queue = this.sessionToQueueMap.get(session);
+        QueuingService queue = this.sessionToQueueMap.get(session);
         queue.removeFromService(user);
     }
 

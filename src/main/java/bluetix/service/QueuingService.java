@@ -8,13 +8,15 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-public class QueuingService<T extends Comparable<T>> {
+import bluetix.model.User;
+
+public class QueuingService {
 
     // T should be a comparable, to add a priority score to users in a separate
     // class?
 
-    private final PriorityQueue<T> queue = new PriorityQueue<>();
-    private final Map<T, Long> service = new HashMap<>();
+    private final PriorityQueue<User> queue = new PriorityQueue<>();
+    private final Map<User, Long> service = new HashMap<>();
 
     private int ticketCount;
 
@@ -26,7 +28,7 @@ public class QueuingService<T extends Comparable<T>> {
     }
 
     // TODO: change enqueue to implement priority
-    public void enqueue(T item) {
+    public void enqueue(User item) {
         if (!inQueueOrService(item))
             queue.offer(item);
         else {
@@ -35,32 +37,32 @@ public class QueuingService<T extends Comparable<T>> {
         }
     }
 
-    public boolean inQueueOrService(T item) {
+    public boolean inQueueOrService(User item) {
         return (queue.contains(item) || service.containsKey(item));
     }
 
-    public boolean inService(T item) {
+    public boolean inService(User item) {
         return service.containsKey(item);
     }
 
-    public T dequeue() {
+    public User dequeue() {
         return this.queue.poll();
     }
 
     public void moveToService() {
-        T item = this.dequeue();
+        User item = this.dequeue();
         service.put(item, System.currentTimeMillis());
     }
 
     public void drainQueue() {
         long currentTime = System.currentTimeMillis();
-        Iterator<Map.Entry<T, Long>> iterator = service.entrySet().iterator();
+        Iterator<Map.Entry<User, Long>> iterator = service.entrySet().iterator();
         while (this.service.size() < ticketCount && !this.queue.isEmpty()) {
             moveToService();
         }
         while(iterator.hasNext()){
-            Map.Entry<T, Long> entry = iterator.next();
-            T item = entry.getKey();
+            Map.Entry<User, Long> entry = iterator.next();
+            User item = entry.getKey();
             long timestamp = entry.getValue();
 
             if (currentTime - timestamp > TimeUnit.MINUTES.toMillis(5)) {
@@ -70,7 +72,7 @@ public class QueuingService<T extends Comparable<T>> {
         }
     }
 
-    public void removeFromService(T object) {
+    public void removeFromService(User object) {
         if (service.containsKey(object))
             service.remove(object);
         else
@@ -81,7 +83,7 @@ public class QueuingService<T extends Comparable<T>> {
         return queue.isEmpty() && service.isEmpty();
     }
 
-    public int getPosition(T item) {
+    public int getPosition(User item) {
         // return queue.(item);
         return 1;
     }

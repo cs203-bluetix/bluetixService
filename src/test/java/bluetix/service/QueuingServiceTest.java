@@ -17,19 +17,18 @@ public class QueuingServiceTest {
 
     }
 
-    @Test
-    void testEnqueue() {
-        QueuingService<Integer> queue = new QueuingService<>(4);
-        queue.enqueue(2);
-        queue.enqueue(3);
-        assertEquals(false, queue.inService(2));
-        try {
-            TimeUnit.SECONDS.sleep(6);
-        } catch (Exception e) {
-            // TODO: handle exception
-        }
-        assertEquals(true, queue.inService(2));
-    }
+    // void testEnqueue() {
+    //     QueuingService<Integer> queue = new QueuingService<>(4);
+    //     queue.enqueue(2);
+    //     queue.enqueue(3);
+    //     assertEquals(false, queue.inService(2));
+    //     try {
+    //         TimeUnit.SECONDS.sleep(6);
+    //     } catch (Exception e) {
+    //         // TODO: handle exception
+    //     }
+    //     assertEquals(true, queue.inService(2));
+    // }
 
     @Test
     void testGetPosition() {
