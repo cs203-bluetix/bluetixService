@@ -28,6 +28,7 @@ public class QueuingService {
         // Schedule the draining task to run every 5 seconds (adjust as needed)
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(this::drainQueue, 0, 5, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(this::drainService, 0, 5, TimeUnit.SECONDS);
         this.ticketCount = ticketCount;
         this.userRepo = userRepo;
     }
@@ -60,12 +61,15 @@ public class QueuingService {
     }
 
     public void drainQueue() {
-        long currentTime = System.currentTimeMillis();
-        Iterator<Map.Entry<User, Long>> iterator = service.entrySet().iterator();
         while (this.service.size() < ticketCount && !this.queue.isEmpty()) {
             moveToService();
         }
-        while(iterator.hasNext()){
+    }
+
+    public void drainService() {
+        long currentTime = System.currentTimeMillis();
+        Iterator<Map.Entry<User, Long>> iterator = service.entrySet().iterator();
+        while (iterator.hasNext()) {
             Map.Entry<User, Long> entry = iterator.next();
             User item = entry.getKey();
             long timestamp = entry.getValue();
