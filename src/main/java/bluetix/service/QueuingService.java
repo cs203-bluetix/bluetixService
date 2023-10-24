@@ -5,10 +5,12 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import bluetix.model.User;
+import bluetix.repository.UserRepo;
 
 public class QueuingService {
 
@@ -19,12 +21,15 @@ public class QueuingService {
     private final Map<User, Long> service = new HashMap<>();
 
     private int ticketCount;
+    private final UserRepo userRepo;
 
-    public QueuingService(int ticketCount) {
+    @Autowired
+    public QueuingService(int ticketCount, UserRepo userRepo) {
         // Schedule the draining task to run every 5 seconds (adjust as needed)
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(this::drainQueue, 0, 5, TimeUnit.SECONDS);
         this.ticketCount = ticketCount;
+        this.userRepo = userRepo;
     }
 
     // TODO: change enqueue to implement priority
