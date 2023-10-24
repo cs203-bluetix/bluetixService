@@ -29,7 +29,7 @@ public class QueuingService {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(this::drainQueue, 0, 5, TimeUnit.SECONDS);
         scheduler.scheduleAtFixedRate(this::kickIdleUsers, 0, 5, TimeUnit.SECONDS);
-        scheduler.scheduleAtFixedRate(this::kickFromQueue, 0, 5, TimeUnit.SECONDS);
+        // scheduler.scheduleAtFixedRate(this::kickFromQueue, 0, 5, TimeUnit.SECONDS);
         this.ticketCount = ticketCount;
         this.userRepo = userRepo;
     }
