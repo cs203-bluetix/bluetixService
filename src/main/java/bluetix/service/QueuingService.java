@@ -29,6 +29,7 @@ public class QueuingService {
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(this::drainQueue, 0, 5, TimeUnit.SECONDS);
         scheduler.scheduleAtFixedRate(this::drainService, 0, 5, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(this::kickFromQueue, 0, 5, TimeUnit.SECONDS);
         this.ticketCount = ticketCount;
         this.userRepo = userRepo;
     }
@@ -57,7 +58,7 @@ public class QueuingService {
 
     public void moveToService() {
         User item = this.dequeue();
-        service.put(item, System.currentTimeMillis());
+        this.service.put(item, System.currentTimeMillis());
     }
 
     public void drainQueue() {
@@ -68,7 +69,7 @@ public class QueuingService {
 
     public void drainService() {
         long currentTime = System.currentTimeMillis();
-        Iterator<Map.Entry<User, Long>> iterator = service.entrySet().iterator();
+        Iterator<Map.Entry<User, Long>> iterator = this.service.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<User, Long> entry = iterator.next();
             User item = entry.getKey();
@@ -81,9 +82,21 @@ public class QueuingService {
         }
     }
 
+    public void kickFromQueue(){
+        if(ticketCount == 0){
+            Iterator<User> queueIterator = queue.iterator();
+            while(queueIterator.hasNext()){
+                User user = queueIterator.next();
+                user.setFailedPurchases(user.getFailedPurchases() + 1);
+                this.userRepo.save(user);
+                queueIterator.remove();
+            }
+        }
+    }
+
     public void removeFromService(User user) {
-        if (service.containsKey(user)){
-            service.remove(user);
+        if (this.service.containsKey(user)){
+            this.service.remove(user);
             user.setFailedPurchases(0);
             this.userRepo.save(user);
         }
