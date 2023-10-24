@@ -27,7 +27,7 @@ public class QueuingService {
     public QueuingService(int ticketCount, UserRepo userRepo) {
         // Schedule the draining task to run every 5 seconds (adjust as needed)
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(this::drainQueue, 0, 5, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(this::drainQueue, 0, 1, TimeUnit.MINUTES);
         scheduler.scheduleAtFixedRate(this::kickIdleUsers, 0, 5, TimeUnit.SECONDS);
         // scheduler.scheduleAtFixedRate(this::kickFromQueue, 0, 5, TimeUnit.SECONDS);
         this.ticketCount = ticketCount;
