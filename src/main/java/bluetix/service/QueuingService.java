@@ -28,17 +28,18 @@ public class QueuingService {
         // Schedule the draining task to run every 5 seconds (adjust as needed)
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(this::drainQueue, 0, 5, TimeUnit.SECONDS);
-        scheduler.scheduleAtFixedRate(this::drainService, 0, 5, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(this::kickIdleUsers, 0, 5, TimeUnit.SECONDS);
         scheduler.scheduleAtFixedRate(this::kickFromQueue, 0, 5, TimeUnit.SECONDS);
         this.ticketCount = ticketCount;
         this.userRepo = userRepo;
     }
 
     // TODO: change enqueue to implement priority
-    public void enqueue(User item) {
-        if (!inQueueOrService(item))
-            queue.offer(item);
-        else {
+    public void enqueue(User user) {
+        if (!inQueueOrService(user)) {
+            user.setTimeStamp(System.currentTimeMillis());
+            queue.offer(user);
+        } else {
             System.out.println("tf??");
             throw new RuntimeException();
         }
@@ -67,7 +68,7 @@ public class QueuingService {
         }
     }
 
-    public void drainService() {
+    public void kickIdleUsers() {
         long currentTime = System.currentTimeMillis();
         Iterator<Map.Entry<User, Long>> iterator = this.service.entrySet().iterator();
         while (iterator.hasNext()) {
@@ -82,10 +83,11 @@ public class QueuingService {
         }
     }
 
-    public void kickFromQueue(){
-        if(ticketCount == 0){
+    // called when no more tickets are left
+    public void kickFromQueue() {
+        if (ticketCount == 0) {
             Iterator<User> queueIterator = queue.iterator();
-            while(queueIterator.hasNext()){
+            while (queueIterator.hasNext()) {
                 User user = queueIterator.next();
                 user.setFailedPurchases(user.getFailedPurchases() + 1);
                 this.userRepo.save(user);
@@ -95,12 +97,11 @@ public class QueuingService {
     }
 
     public void removeFromService(User user) {
-        if (this.service.containsKey(user)){
+        if (this.service.containsKey(user)) {
             this.service.remove(user);
             user.setFailedPurchases(0);
             this.userRepo.save(user);
-        }
-        else
+        } else
             throw new RuntimeException();
     }
 
