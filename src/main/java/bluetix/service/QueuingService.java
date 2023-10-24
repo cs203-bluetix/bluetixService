@@ -21,17 +21,14 @@ public class QueuingService {
     private final Map<User, Long> service = new HashMap<>();
 
     private int ticketCount;
-    private final UserRepo userRepo;
 
-    @Autowired
-    public QueuingService(int ticketCount, UserRepo userRepo) {
+    public QueuingService(int ticketCount) {
         // Schedule the draining task to run every 5 seconds (adjust as needed)
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(this::drainQueue, 0, 1, TimeUnit.MINUTES);
         scheduler.scheduleAtFixedRate(this::kickIdleUsers, 0, 5, TimeUnit.SECONDS);
         // scheduler.scheduleAtFixedRate(this::kickFromQueue, 0, 5, TimeUnit.SECONDS);
         this.ticketCount = ticketCount;
-        this.userRepo = userRepo;
     }
 
     // TODO: change enqueue to implement priority
@@ -90,7 +87,6 @@ public class QueuingService {
             while (queueIterator.hasNext()) {
                 User user = queueIterator.next();
                 user.setFailedPurchases(user.getFailedPurchases() + 1);
-                this.userRepo.save(user);
                 queueIterator.remove();
             }
         }
@@ -100,7 +96,6 @@ public class QueuingService {
         if (this.service.containsKey(user)) {
             this.service.remove(user);
             user.setFailedPurchases(0);
-            this.userRepo.save(user);
         } else
             throw new RuntimeException();
     }
