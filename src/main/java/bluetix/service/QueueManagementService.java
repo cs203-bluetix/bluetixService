@@ -32,7 +32,7 @@ public class QueueManagementService {
         if (session != null) {
             if (this.sessionToQueueMap.get(session) == null) {
 
-                this.sessionToQueueMap.put(session, new QueuingService(session.getTicket().size()));
+                this.sessionToQueueMap.put(session, new QueuingService(session.getTicket().size(), this.userRepo));
             }
         }
     }

@@ -21,22 +21,27 @@ public class QueuingService {
     private final Map<User, Long> service = new HashMap<>();
 
     private int ticketCount;
+    private final UserRepo userRepo;
 
-    public QueuingService(int ticketCount) {
+    @Autowired
+    public QueuingService(int ticketCount, UserRepo userRepo) {
         // Schedule the draining task to run every 5 seconds (adjust as needed)
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(this::drainQueue, 0, 1, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(this::drainQueue, 0, 5, TimeUnit.SECONDS);
         scheduler.scheduleAtFixedRate(this::kickIdleUsers, 0, 5, TimeUnit.SECONDS);
-        // scheduler.scheduleAtFixedRate(this::kickFromQueue, 0, 5, TimeUnit.SECONDS);
+        scheduler.scheduleAtFixedRate(this::kickFromQueue, 0, 5, TimeUnit.SECONDS);
         this.ticketCount = ticketCount;
+        this.userRepo = userRepo;
     }
 
     // TODO: change enqueue to implement priority
     public void enqueue(User user) {
-        if (!inQueueOrService(user)) {
+        if (!inQueueOrService(user)){
             user.setTimeStamp(System.currentTimeMillis());
+            this.userRepo.save(user);
             queue.offer(user);
-        } else {
+        }
+        else {
             System.out.println("tf??");
             throw new RuntimeException();
         }
@@ -80,23 +85,26 @@ public class QueuingService {
         }
     }
 
-    // called when no more tickets are left
-    public void kickFromQueue() {
-        if (ticketCount == 0) {
+    //called when no more tickets are left
+    public void kickFromQueue(){
+        if(ticketCount == 0){
             Iterator<User> queueIterator = queue.iterator();
-            while (queueIterator.hasNext()) {
+            while(queueIterator.hasNext()){
                 User user = queueIterator.next();
                 user.setFailedPurchases(user.getFailedPurchases() + 1);
+                this.userRepo.save(user);
                 queueIterator.remove();
             }
         }
     }
 
     public void removeFromService(User user) {
-        if (this.service.containsKey(user)) {
+        if (this.service.containsKey(user)){
             this.service.remove(user);
             user.setFailedPurchases(0);
-        } else
+            this.userRepo.save(user);
+        }
+        else
             throw new RuntimeException();
     }
 
