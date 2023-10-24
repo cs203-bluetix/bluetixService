@@ -6,7 +6,6 @@ import lombok.*;
 
 import java.util.*;
 
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @DiscriminatorColumn(name = "role", discriminatorType = DiscriminatorType.STRING)
 @NoArgsConstructor
 @AllArgsConstructor
-public class User implements UserDetails, Comparable<User>{
+public class User implements UserDetails, Comparable<User> {
     @Id
     @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,6 +27,7 @@ public class User implements UserDetails, Comparable<User>{
     private String firstName;
     private String lastName;
     private Integer failedPurchases;
+    private Long timeStamp;
 
     @Column(unique = true)
     @Email
@@ -35,7 +35,6 @@ public class User implements UserDetails, Comparable<User>{
 
     @JsonIgnore
     private String password;
-
 
     public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
@@ -89,6 +88,10 @@ public class User implements UserDetails, Comparable<User>{
 
     @Override
     public int compareTo(User u) {
-        return this.failedPurchases - u.getFailedPurchases();
+        if (u.getFailedPurchases() - this.getFailedPurchases() != 0) {
+            return u.getFailedPurchases() - this.getFailedPurchases();
+        } else {
+            return Long.compare(this.getTimeStamp(), u.getTimeStamp());
+        }
     }
 }
