@@ -19,7 +19,7 @@ import bluetix.serializable.SessionId;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/queue")
+@RequestMapping("/api/queue")
 
 public class QueueController {
     private QueueManagementService queueService;
@@ -43,12 +43,12 @@ public class QueueController {
         }
     }
 
-    @GetMapping("/status/{eventId}/{sessionId}")
-    public ResponseEntity<String> checkInQueue(@PathVariable("eventId") Long eventId,
+    @GetMapping("/inService/{eventId}/{sessionId}")
+    public ResponseEntity<Boolean> checkInQueue(@PathVariable("eventId") Long eventId,
             @PathVariable("sessionId") Long sessionId, @AuthenticationPrincipal User user) {
         try {
-            boolean status = this.queueService.checkUserInQueue(eventId, sessionId, user);
-            return ResponseEntity.ok("" + status);
+            boolean status = this.queueService.checkUserInService(eventId, sessionId, user);
+            return ResponseEntity.ok(status);
         } catch (Exception e) {
             // TODO: handle exception
             e.printStackTrace();

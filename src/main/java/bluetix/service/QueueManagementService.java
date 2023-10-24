@@ -52,10 +52,10 @@ public class QueueManagementService {
         return queue.inQueueOrService(user);
     }
 
-    public void checkUserInService(Long eventId, Long sessionId, User user) {
+    public boolean checkUserInService(Long eventId, Long sessionId, User user) {
         Session session = this.sessionService.findById(eventId, sessionId);
         QueuingService queue = this.sessionToQueueMap.get(session);
-        queue.inService(user);
+        return queue.inService(user);
     }
 
     public void leaveQueue(Long eventId, Long sessionId, User user) {
