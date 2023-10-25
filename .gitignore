@@ -1,4 +1,9 @@
 .DS_Store
-/target
+
+target
+
 /bin/
-/test/java/bluetix/service/*
+
+src/test/java/bluetix/service/*
+
+.vscode/
