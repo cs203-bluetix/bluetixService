@@ -59,4 +59,59 @@ public class QueuingServiceTest {
     void testRemoveFromService() {
 
     }
+
+    @Test
+    void testDequeue2() {
+        
+    }
+
+    @Test
+    void testDrainQueue2() {
+        
+    }
+
+    @Test
+    void testEnqueue() {
+        
+    }
+
+    @Test
+    void testGetPosition2() {
+        
+    }
+
+    @Test
+    void testInQueueOrService2() {
+        
+    }
+
+    @Test
+    void testInService2() {
+        
+    }
+
+    @Test
+    void testIsEmpty2() {
+        
+    }
+
+    @Test
+    void testKickFromQueue() {
+        
+    }
+
+    @Test
+    void testKickIdleUsers() {
+        
+    }
+
+    @Test
+    void testMoveToService2() {
+        
+    }
+
+    @Test
+    void testRemoveFromService2() {
+        
+    }
 }
