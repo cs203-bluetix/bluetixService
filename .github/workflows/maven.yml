@@ -18,7 +18,7 @@ jobs:
   build:
     env:
       JWT_SECRET: ${{secrets.JWT_SECRET}}
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v3
@@ -51,7 +51,7 @@ jobs:
         tags: 69iqrexgan/bluetixservice:latest
   deploy:
     needs: build
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
