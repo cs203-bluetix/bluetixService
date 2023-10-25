@@ -21,6 +21,10 @@ public class QueueManagementService {
 
     private final HashMap<Session, QueuingService> sessionToQueueMap = new HashMap<>();
 
+    HashMap<Session, QueuingService> getSessionToQueueMap() {
+        return sessionToQueueMap;
+    }
+
     @Autowired
     public QueueManagementService(SessionService sessionService, UserRepo userRepo) {
         this.sessionService = sessionService;

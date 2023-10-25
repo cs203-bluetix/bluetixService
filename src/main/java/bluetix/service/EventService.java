@@ -18,16 +18,23 @@ import jakarta.persistence.EntityNotFoundException;
 @Service
 public class EventService {
     
-	@Autowired
+
     private EventRepo eventRepo;
 
-	@Autowired
+
     private VenueRepo venueRepo;
 	
-	@Autowired
+
     private UserRepo userRepo;
 
-	//Basic Event CRUD
+    @Autowired
+	public EventService(EventRepo eventRepo, VenueRepo venueRepo, UserRepo userRepo) {
+        this.eventRepo = eventRepo;
+        this.venueRepo = venueRepo;
+        this.userRepo = userRepo;
+    }
+
+    //Basic Event CRUD
     public Event getEventById(Long eventId) {
         return eventRepo.findById(eventId).orElse(null);
     }

@@ -34,17 +34,24 @@ public class QueuingService {
         this.userRepo = userRepo;
     }
 
+    PriorityQueue<User> getQueue() {
+        return queue;
+    }
+
+    Map<User, Long> getService() {
+        return service;
+    }
+
     // TODO: change enqueue to implement priority
     public void enqueue(User user) {
-        if (!inQueueOrService(user)){
+        if (!inQueueOrService(user)) {
             user.setTimeStamp(System.currentTimeMillis());
-            if(user.getFailedPurchases() == null){
+            if (user.getFailedPurchases() == null) {
                 user.setFailedPurchases(0);
             }
             this.userRepo.save(user);
             queue.offer(user);
-        }
-        else {
+        } else {
             System.out.println("tf??");
             throw new RuntimeException();
         }
@@ -88,11 +95,11 @@ public class QueuingService {
         }
     }
 
-    //called when no more tickets are left
-    public void kickFromQueue(){
-        if(ticketCount == 0){
+    // called when no more tickets are left
+    public void kickFromQueue() {
+        if (ticketCount == 0) {
             Iterator<User> queueIterator = queue.iterator();
-            while(queueIterator.hasNext()){
+            while (queueIterator.hasNext()) {
                 User user = queueIterator.next();
                 user.setFailedPurchases(user.getFailedPurchases() + 1);
                 this.userRepo.save(user);
@@ -102,12 +109,12 @@ public class QueuingService {
     }
 
     public void removeFromService(User user) {
-        if (this.service.containsKey(user)){
+        if (this.service.containsKey(user)) {
             this.service.remove(user);
             user.setFailedPurchases(0);
             this.userRepo.save(user);
-        }
-        else
+            this.ticketCount -= 1;
+        } else
             throw new RuntimeException();
     }
 
