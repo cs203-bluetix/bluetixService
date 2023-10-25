@@ -31,8 +31,6 @@ jobs:
         cache: maven
     - name: Set Environment Variable
       run: echo $jwtSecret
-    - name: Run test Cases
-      run: ./mvnw test 
     - name: Build with Maven
       id: mvnpackage
       run: mvn -B package
