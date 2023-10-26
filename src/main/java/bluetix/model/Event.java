@@ -6,6 +6,7 @@ import lombok.*;
 import java.util.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
 
 @EqualsAndHashCode(of = {"eventId"})
 @Entity
@@ -49,25 +50,22 @@ public class Event {
     private String image_url;
 
     //One Creator can have many Events
+    @JsonView(Event.class)
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private Creator creator;
     
     //One Location to Many Events
+    @JsonView(Event.class)
     @ManyToOne
-    @JoinColumn(name = "venue_id")
+    @JoinColumn(name = "venue_id", insertable = false, updatable = false)
     private Venue venue;
 
     //One Event to Many Sessions
+    @JsonView(Event.class)
 	@JsonIgnore
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<Session> sessions;
-	
-
-//    One Event to Many TicketCat
-//	@JsonIgnore
-//    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
-//    private List<Ticket> ticket;
 	
     public Event(Venue venue, Creator creator, String name, String description, String faq, String type, String ticket_pricing, String admission_policy, String image_url) {
         this.name = name;
