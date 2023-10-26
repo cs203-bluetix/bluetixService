@@ -37,6 +37,7 @@ public class CreatorService {
 	public List<Ticket> createEventSessionAndTicket(TicketFormDTO ticketFormDTO) throws Exception{
         	try {
         		//need to insert actual userId here
+//		    	Long tempUserId = (long) ticketFormDTO.getUser_id();
 		    	Long tempUserId = (long) 1;
 		        Event event;
 				event = eventService.createEventWithVenueId(ticketFormDTO.getEventDTO(), ticketFormDTO.getVenue_id(), tempUserId);
