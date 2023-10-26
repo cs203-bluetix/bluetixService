@@ -6,9 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.fasterxml.jackson.annotation.JsonView;
-
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.cache.annotation.Cacheable;
 
@@ -109,14 +106,12 @@ public class EventController {
 //	}
 
 
-    @JsonView(Event.class)
     @Cacheable("eventsCache")
     @GetMapping
     List<Event> getAllEvents() {
         return eventRepo.findAll();
     }
 
-    @JsonView(Event.class)
     @GetMapping("/{id}")
     Event getEventById(@PathVariable Long id) {
         return eventRepo.findById(id)

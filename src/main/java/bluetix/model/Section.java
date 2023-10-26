@@ -3,7 +3,6 @@ package bluetix.model;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
 
 import bluetix.serializable.SectionId;
 import jakarta.persistence.*;
@@ -24,7 +23,6 @@ public class Section {
     private int maxSeat;
     
     //Many Section to One Events
-    @JsonView(Section.class)
     @ManyToOne
     @MapsId("venueId")
     @JoinColumn(name = "venue_id")
