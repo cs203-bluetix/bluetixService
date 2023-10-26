@@ -50,12 +50,12 @@ public class Event {
 
     //One Creator can have many Events
     @ManyToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id")
     private Creator creator;
     
     //One Location to Many Events
     @ManyToOne
-    @JoinColumn(name = "venue_id", insertable = false, updatable = false)
+    @JoinColumn(name = "venue_id")
     private Venue venue;
 
     //One Event to Many Sessions
