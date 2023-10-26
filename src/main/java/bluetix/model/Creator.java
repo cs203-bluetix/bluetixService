@@ -2,9 +2,7 @@ package bluetix.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
@@ -13,7 +11,6 @@ import jakarta.persistence.OneToMany;
 import lombok.*;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Getter @Setter @NoArgsConstructor
 @DiscriminatorValue("CREATOR")
 public class Creator extends User {
