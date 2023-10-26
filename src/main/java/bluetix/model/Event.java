@@ -12,11 +12,13 @@ import com.fasterxml.jackson.annotation.JsonView;
 @Entity
 @Getter @Setter @NoArgsConstructor
 public class Event {
+    @JsonView(Event.class)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="event_id", unique=true)
     private Long eventId;
 
+    @JsonView(Event.class)
     @Column(name="name")
     @NotBlank
     private String name;
@@ -26,25 +28,30 @@ public class Event {
     @NotBlank
     private String description;
 
+    @JsonView(Event.class)
     @Lob
     @Column(name="faq", columnDefinition = "TEXT")
     @NotBlank
     private String faq;
 
+    @JsonView(Event.class)
     @Column(name="type")
     @NotBlank
     private String type;
 
+    @JsonView(Event.class)
     @Lob
     @Column(name="ticket_pricing", columnDefinition = "TEXT")
     @NotBlank
     private String ticket_pricing;
-    
+
+    @JsonView(Event.class)
     @Lob
     @Column(name="admission_policy", columnDefinition = "TEXT")
     @NotBlank
     private String admission_policy;
 
+    @JsonView(Event.class)
     @Column(name="image_url")
     @NotBlank
     private String image_url;

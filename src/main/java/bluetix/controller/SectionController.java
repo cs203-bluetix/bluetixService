@@ -4,7 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 import bluetix.exception.DataNotFoundException;
+import bluetix.model.Event;
 import bluetix.model.Section;
 import bluetix.model.Session;
 import bluetix.repository.SectionRepo;
@@ -26,7 +29,8 @@ public class SectionController {
     public SectionController(SectionService sectionService) {
         this.sectionService = sectionService;
     }
-    
+
+    @JsonView(Event.class)
     @Cacheable("sectionsCache")
     @GetMapping("/")
     public List<Section> getAllSections() {
@@ -34,6 +38,7 @@ public class SectionController {
     }
     
     //get by Venue_id
+    @JsonView(Event.class)
     @GetMapping("/{venue_id}")
     public List<Section> getSectionByVenue(@PathVariable Long venue_id) {
         return sectionService.getSectionsByVenue(venue_id);

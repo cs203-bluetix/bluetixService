@@ -1,6 +1,7 @@
 package bluetix.controller;
 
 import bluetix.exception.DataNotFoundException;
+import bluetix.model.Event;
 import bluetix.model.Session;
 import bluetix.repository.SessionRepo;
 import bluetix.serializable.SessionId;
@@ -10,6 +11,8 @@ import bluetix.service.SessionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 import java.util.List;
 
@@ -25,23 +28,16 @@ public class SessionController {
         this.sessionService = sessionService;
     }
 
+    @JsonView(Session.class)
     @Cacheable("sessionCache")
     @GetMapping
     public List<Session> getAllSessions() {
         return sessionService.findAll();
     }
 
-    // @GetMapping("/{eventId}/{sessionId}")
-    // public Session getSessionById(@PathVariable Long eventId, @PathVariable Long
-    // sessionId) {
-    // SessionId id = new SessionId();
-    // id.setEventId(eventId);
-    // id.setSessionId(sessionId);
-    //
-    // return sessionService.findById(id);
-    // }
 
     // Get existing sessions by venue id
+    @JsonView(Session.class)
     @GetMapping("/findByVenueId/{venue_id}")
     public List<Session> getSessionsByVenue(@PathVariable Long venue_id) {
         List<Session> sessions = sessionService.findByVenueId(venue_id);
@@ -50,6 +46,7 @@ public class SessionController {
     }
 
     // Get existing sessions by event id
+    @JsonView(Session.class)
     @GetMapping("/byEventId/{event_id}")
     public List<Session> getSessionsByEventName(@PathVariable Long event_id) {
         List<Session> sessions = sessionService.findByEventId(event_id);
@@ -70,26 +67,4 @@ public class SessionController {
     public void updateSession(@PathVariable Long eventId, @PathVariable Long sessionId, @RequestBody String transAddr) {
         sessionService.setTransAddr(eventId, sessionId, transAddr);
     }
-
-    //
-    // @PutMapping("/{eventId}/{sessionId}")
-    // public Session updateSession(@PathVariable Long eventId, @PathVariable Long
-    // sessionId, @RequestBody Session sessionDetails) {
-    // SessionId id = new SessionId();
-    // id.setEventId(eventId);
-    // id.setSessionId(sessionId);
-    // Session session = sessionService.findById(id);
-    //
-    // return sessionService.save(session);
-    // }
-    //
-    // @DeleteMapping("/{eventId}/{sessionId}")
-    // public void deleteSession(@PathVariable Long eventId, @PathVariable Long
-    // sessionId) {
-    // SessionId id = new SessionId();
-    // id.setEventId(eventId);
-    // id.setSessionId(sessionId);
-    //
-    // sessionService.deleteById(id);
-    // }
 }
