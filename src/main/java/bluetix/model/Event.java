@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import java.util.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @EqualsAndHashCode(of = {"eventId"})
@@ -49,11 +50,13 @@ public class Event {
     private String image_url;
 
     //One Creator can have many Events
+    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
     private Creator creator;
     
     //One Location to Many Events
+    @JsonIdentityReference(alwaysAsId = true)
     @ManyToOne
     @JoinColumn(name = "venue_id", insertable = false, updatable = false)
     private Venue venue;
