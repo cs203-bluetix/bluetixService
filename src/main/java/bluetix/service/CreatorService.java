@@ -17,19 +17,28 @@ import bluetix.repository.SectionRepo;
 @Service
 public class CreatorService {
 	
-    @Autowired
+
     private EventService eventService;
 
-    @Autowired
     private SessionService sessionService;
     
-    @Autowired
     private TicketService ticketService;
-    
-    public List<Ticket> createEventSessionAndTicket(TicketFormDTO ticketFormDTO) throws Exception{
+
+	
+    @Autowired
+    public CreatorService(EventService eventService, SessionService sessionService, TicketService ticketService) {
+		this.eventService = eventService;
+		this.sessionService = sessionService;
+		this.ticketService = ticketService;
+	}
+
+
+
+	public List<Ticket> createEventSessionAndTicket(TicketFormDTO ticketFormDTO) throws Exception{
         	try {
         		//need to insert actual userId here
-		    	Long tempUserId = (long) 2;
+//		    	Long tempUserId = (long) ticketFormDTO.getUser_id();
+		    	Long tempUserId = (long) 1;
 		        Event event;
 				event = eventService.createEventWithVenueId(ticketFormDTO.getEventDTO(), ticketFormDTO.getVenue_id(), tempUserId);
 		        List<Session> sessions = sessionService.createList(event, ticketFormDTO.getSessionDTOList());

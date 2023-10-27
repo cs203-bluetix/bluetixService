@@ -22,4 +22,5 @@ public class TicketFormDTO {
 	private List<TicketDTO> ticketDTOList;
 	private Long venue_id;
     private MultipartFile file;
+    private Long user_id;
 }

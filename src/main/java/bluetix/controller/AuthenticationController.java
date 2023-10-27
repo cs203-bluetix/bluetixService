@@ -1,8 +1,13 @@
 package bluetix.controller;
 
+import java.time.Duration;
+import java.util.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,7 +31,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
@@ -43,22 +48,30 @@ public class AuthenticationController {
     public ResponseEntity<JwtAuthenticationResponse> signupCustomer(@RequestBody SignUpRequest request,
             HttpServletResponse response) {
         JwtAuthenticationResponse responseBody = authenticationService.signupCustomer(request);
-        Cookie token = new Cookie("jwt", responseBody.getToken());
-        token.setHttpOnly(true);
-        // token.setSecure(true);
-        response.addCookie(token);
-        return ResponseEntity.ok(responseBody);
+        ResponseCookie resCookie = ResponseCookie.from("jwt", responseBody.getToken()).httpOnly(false)
+        .maxAge(Duration.ofHours(10))
+        .path("/")
+        .httpOnly(true)
+        .secure(false)
+        .build();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Set-Cookie", resCookie.toString());
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(responseBody);
     }
 
     @PostMapping("/signup/creator")
     public ResponseEntity<JwtAuthenticationResponse> signupCreator(@RequestBody SignUpRequest request,
             HttpServletResponse response) {
         JwtAuthenticationResponse responseBody = authenticationService.signupCreator(request);
-        Cookie token = new Cookie("jwt", responseBody.getToken());
-        token.setHttpOnly(true);
-        // token.setSecure(true);
-        response.addCookie(token);
-        return ResponseEntity.ok(responseBody);
+        ResponseCookie resCookie = ResponseCookie.from("jwt", responseBody.getToken()).httpOnly(false)
+        .maxAge(Duration.ofHours(10))
+        .path("/")
+        .httpOnly(true)
+        .secure(false)
+        .build();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Set-Cookie", resCookie.toString());
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(responseBody);
     }
 
     @PostMapping("/signin")
@@ -71,11 +84,15 @@ public class AuthenticationController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatusCode.valueOf(401)).build();
         }
-        Cookie token = new Cookie("jwt", responseBody.getToken());
-        token.setHttpOnly(true);
-        // token.setSecure(true);
-        response.addCookie(token);
-        return ResponseEntity.ok(responseBody);
+        ResponseCookie resCookie = ResponseCookie.from("jwt", responseBody.getToken()).httpOnly(false)
+        .maxAge(Duration.ofHours(10))
+        .path("/")
+        .httpOnly(true)
+        .secure(false)
+        .build();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Set-Cookie", resCookie.toString());
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(responseBody);
     }
 
     @PostMapping("/validateJwt")
@@ -84,7 +101,6 @@ public class AuthenticationController {
             HttpServletResponse response) {
         String jwt = null;
         Cookie[] cookies = request.getCookies();
-        final String authHeader = request.getHeader("Authorization");
         if (cookies != null) {
             for (Cookie cookie : cookies) {
                 if (cookie.getName().equals("jwt")) {
@@ -93,9 +109,7 @@ public class AuthenticationController {
                 }
             }
         }
-        if (jwt == null) {
-            jwt = authHeader.substring(7);
-        }
+      
         String userEmail = jwtService.extractUserName(jwt);
         if (StringUtils.isNotEmpty(userEmail)) {
             UserDetails userDetails = userService.userDetailsService()

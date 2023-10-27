@@ -7,6 +7,7 @@ import java.util.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@EqualsAndHashCode(of = {"eventId"})
 @Entity
 @Getter @Setter @NoArgsConstructor
 public class Event {
@@ -61,12 +62,6 @@ public class Event {
 	@JsonIgnore
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
     private List<Session> sessions;
-	
-
-//    One Event to Many TicketCat
-//	@JsonIgnore
-//    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
-//    private List<Ticket> ticket;
 	
     public Event(Venue venue, Creator creator, String name, String description, String faq, String type, String ticket_pricing, String admission_policy, String image_url) {
         this.name = name;

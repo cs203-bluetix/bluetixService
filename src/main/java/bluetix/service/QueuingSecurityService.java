@@ -1,27 +1,29 @@
-package bluetix.service;
+// package bluetix.service;
 
-import bluetix.model.*;
-import jakarta.servlet.http.HttpServletRequest;
+// import bluetix.model.*;
+// import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.function.Supplier;
+// import java.util.function.Supplier;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
-import org.springframework.stereotype.Service;
-import org.springframework.context.annotation.Bean;
+// import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.security.core.Authentication;
+// import org.springframework.security.web.access.intercept.RequestAuthorizationContext;
+// import org.springframework.stereotype.Service;
+// import org.springframework.context.annotation.Bean;
 
-@Service
-public class QueuingSecurityService {
-    @Autowired
-    private QueuingService<User> queueService;
+// @Service
 
-    public boolean check(Supplier<Authentication> authentication, RequestAuthorizationContext context) {
-        User user = (User) authentication.get().getPrincipal();
-        int userPosition = queueService.getPosition(user);
+// //Deprecate, not useful anymore
+// public class QueuingSecurityService {
+//     @Autowired
+//     private QueuingService<User> queueService;
 
-        // Determine if it's the user's turn based on their position
-        // Return true to allow access, false otherwise
-        return userPosition == 0; // 0 means it's their turn
-    }
-}
+//     public boolean check(Supplier<Authentication> authentication, RequestAuthorizationContext context) {
+//         User user = (User) authentication.get().getPrincipal();
+//         // int userPosition = queueService.getPosition(user);
+
+//         // Determine if it's the user's turn based on their position
+//         // Return true to allow access, false otherwise
+//         return true; // 0 means it's their turn
+//     }
+// }

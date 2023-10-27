@@ -37,7 +37,7 @@ public class SecurityConfiguration {
     private final UserService userService;
     @Bean
     @Autowired
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, QueuingSecurityService queuingSecurityService) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(cors-> cors.disable())
                 .authorizeHttpRequests(request -> request.requestMatchers("/api/auth/**").permitAll()
@@ -49,10 +49,6 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/creators/**").permitAll()
                         .requestMatchers("/api/storage/**").permitAll()
                         .requestMatchers("/api/v1/resource").hasAuthority("CREATOR")
-                        .requestMatchers("/api/secured/resource").access((authentication, context) -> {
-                            boolean granted = queuingSecurityService.check(authentication, context);
-                            return new AuthorizationDecision(granted);
-                        })
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(

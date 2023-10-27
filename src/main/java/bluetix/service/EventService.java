@@ -18,29 +18,39 @@ import jakarta.persistence.EntityNotFoundException;
 @Service
 public class EventService {
     
-	@Autowired
+
     private EventRepo eventRepo;
 
-	@Autowired
+
     private VenueRepo venueRepo;
 	
-	@Autowired
+
     private UserRepo userRepo;
 
-	//Basic Event CRUD
+    @Autowired
+	public EventService(EventRepo eventRepo, VenueRepo venueRepo, UserRepo userRepo) {
+        this.eventRepo = eventRepo;
+        this.venueRepo = venueRepo;
+        this.userRepo = userRepo;
+    }
+
+    //Basic Event CRUD
     public Event getEventById(Long eventId) {
         return eventRepo.findById(eventId).orElse(null);
     }
 
     public Event createEventWithVenueId(EventDTO eventDTO, Long venue_id, Long user_id) throws Exception {
     	Venue venue = venueRepo.findById(venue_id).orElse(null);
-        User user = userRepo.findById(user_id)
+        Creator creator = (Creator) userRepo.findById(user_id)
                 .orElseThrow(EntityNotFoundException::new);
-        if(user.getDecriminatorValue().equals("USER")) {
-        	throw new Exception("User is not a Creator");
-        }
-        Creator creator = (Creator) user;
+        System.out.println("User is a " + creator.getDecriminatorValue() + "type");
+//        if(user.getDecriminatorValue().equals("CUSTOMER")) {
+//        	System.out.println("Suss..Imposter!");
+//        	throw new Exception("CUSTOMER is not a Creator");
+//        }
+        // Creator creator = (Creator) user;
         Event newEvent = new Event(venue, creator, eventDTO.getName(), eventDTO.getDescription(), eventDTO.getFaq(), eventDTO.getType(), eventDTO.getTicket_pricing(), eventDTO.getAdmission_policy(), eventDTO.getImage_url()+".jpg");
+        System.out.println("Successfully created event...");
         return eventRepo.save(newEvent);
     }
 
