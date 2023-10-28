@@ -51,7 +51,7 @@ public class AuthenticationController {
         ResponseCookie resCookie = ResponseCookie.from("jwt", responseBody.getToken()).httpOnly(false)
         .maxAge(Duration.ofHours(10))
         .path("/")
-        .httpOnly(true)
+        .httpOnly(false)
         .secure(false)
         .build();
         HttpHeaders headers = new HttpHeaders();
@@ -66,7 +66,7 @@ public class AuthenticationController {
         ResponseCookie resCookie = ResponseCookie.from("jwt", responseBody.getToken()).httpOnly(false)
         .maxAge(Duration.ofHours(10))
         .path("/")
-        .httpOnly(true)
+        .httpOnly(false)
         .secure(false)
         .build();
         HttpHeaders headers = new HttpHeaders();
@@ -87,7 +87,7 @@ public class AuthenticationController {
         ResponseCookie resCookie = ResponseCookie.from("jwt", responseBody.getToken()).httpOnly(false)
         .maxAge(Duration.ofHours(10))
         .path("/")
-        .httpOnly(true)
+        .httpOnly(false)
         .secure(false)
         .build();
         HttpHeaders headers = new HttpHeaders();
