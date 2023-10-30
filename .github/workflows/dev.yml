@@ -25,7 +25,7 @@ jobs:
       uses: mirromutth/mysql-action@v1.1
       with:
         mysql database: 'bluetixdb' # Optional, default value is "test". The specified database which will be create
-        mysql root password: ${{''}} # Required if "mysql user" is empty, default is empty. The root superuser password
+        mysql root password: ${{'123'}} # Required if "mysql user" is empty, default is empty. The root superuser password
     - name: Set Environment Variable
       run: echo $jwtSecret
     - name: Run test Cases
