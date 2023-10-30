@@ -15,7 +15,10 @@ jobs:
       S3_REGION_STATIC: ${{secrets.S3_REGION_STATIC}}
       S3_BUCKET: ${{'bluetixbucket'}}
     runs-on: ubuntu-latest
-
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
