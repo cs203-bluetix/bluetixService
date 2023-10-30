@@ -18,6 +18,10 @@ jobs:
   build:
     env:
       JWT_SECRET: ${{secrets.JWT_SECRET}}
+      S3_ACCESS_KEY: ${{secrets.S3_ACCESS_KEY}}
+      S3_SECRET_ACCESS_KEY: ${{secrets.S3_SECRET_ACCESS_KEY}}
+      S3_REGION_STATIC: ${{secrets.S3_REGION_STATIC}}
+      S3_BUCKET: ${{'bluetixbucket'}}
     runs-on: ubuntu-latest
 
     steps:
@@ -29,6 +33,11 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - name: Set MYSQL for Tests
+      uses: mirromutth/mysql-action@v1.1
+      with:
+        mysql database: 'bluetixdb' # Optional, default value is "test". The specified database which will be create
+        mysql root password: ${{'123'}}
     - name: Set Environment Variable
       run: echo $jwtSecret
     - name: Build with Maven
