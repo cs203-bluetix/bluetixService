@@ -4,6 +4,6 @@ target
 
 /bin/
 
-src/test/java/bluetix/service/*
+
 
 .vscode/
