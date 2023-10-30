@@ -21,7 +21,7 @@ import bluetix.model.Event;
 import bluetix.model.Session;
 import bluetix.repository.SessionRepo;
 
-@SpringBootTest
+@SpringBootTest(properties = {"spring.config.location=classpath:application-test.properties"})
 class SessionServiceTest {
 
     @Mock

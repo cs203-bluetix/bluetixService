@@ -24,7 +24,7 @@ import bluetix.repository.SessionRepo;
 import bluetix.repository.TicketRepo;
 import bluetix.serializable.TicketId;
 
-@SpringBootTest
+@SpringBootTest(properties = {"spring.config.location=classpath:application-test.properties"})
 class TicketServiceTest {
 
     @Mock

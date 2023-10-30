@@ -22,7 +22,7 @@ import bluetix.repository.EventRepo;
 import bluetix.repository.UserRepo;
 import bluetix.repository.VenueRepo;
 
-@SpringBootTest
+@SpringBootTest(properties = {"spring.config.location=classpath:application-test.properties"})
 class EventServiceTest {
 
     @MockBean

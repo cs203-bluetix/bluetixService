@@ -18,7 +18,7 @@ import bluetix.model.User;
 import bluetix.repository.UserRepo;
 import bluetix.service.QueuingService;
 
-@SpringBootTest
+@SpringBootTest(properties = {"spring.config.location=classpath:application-test.properties"})
 class QueuingServiceTest {
 
     @MockBean

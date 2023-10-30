@@ -21,7 +21,7 @@ import bluetix.service.QueueManagementService;
 import bluetix.service.SessionService;
 import bluetix.service.QueuingService;
 
-@SpringBootTest
+@SpringBootTest(properties = {"spring.config.location=classpath:application-test.properties"})
 class QueueManagementServiceTest {
 
     @MockBean

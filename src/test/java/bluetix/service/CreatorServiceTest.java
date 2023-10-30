@@ -28,7 +28,7 @@ import bluetix.service.EventService;
 import bluetix.service.SessionService;
 import bluetix.service.TicketService;
 
-@SpringBootTest
+@SpringBootTest(properties = {"spring.config.location=classpath:application-test.properties"})
 class CreatorServiceTest {
 
     @MockBean
