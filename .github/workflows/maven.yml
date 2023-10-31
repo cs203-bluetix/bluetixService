@@ -74,7 +74,7 @@ jobs:
     - name: Pull Docker image
       run: ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@ec2-13-211-240-56.ap-southeast-2.compute.amazonaws.com 'sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }} ;sudo docker pull 69iqrexgan/bluetixservice:latest'
     - name: Stop running container
-      run: ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@ec2-13-211-240-56.ap-southeast-2.compute.amazonaws.com 'sudo docker stop bluetixservice || true'; ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@ec2-13-211-240-56.ap-southeast-2.compute.amazonaws.com 'sudo docker rmi -f $(docker images -aq) || true'
+      run: ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@ec2-13-211-240-56.ap-southeast-2.compute.amazonaws.com 'sudo docker stop bluetixservice || true'; ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@ec2-13-211-240-56.ap-southeast-2.compute.amazonaws.com 'sudo docker rm bluetixservice || true'
     - name: Run new container
       run: ssh -o StrictHostKeyChecking=no -i key.pem ec2-user@ec2-13-211-240-56.ap-southeast-2.compute.amazonaws.com 'sudo docker run -d --name bluetixservice -p 80:8080 --env-file env.list 69iqrexgan/bluetixservice:latest'
     
