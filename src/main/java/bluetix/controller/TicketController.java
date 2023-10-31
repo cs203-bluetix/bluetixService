@@ -72,18 +72,6 @@ public class TicketController {
         return ticketService.findUniqueByEventVenueId(event_id, venue_id);
     }
 
-//    @PutMapping("/{event_id}/{venue_id}/{section_id}")
-//    Ticket updateTicket(@PathVariable Long id, @RequestBody Ticket updatedTicket) {
-//        Ticket ticket = ticketService.findById(id)
-//                .orElseThrow(() -> new DataNotFoundException("Ticket not found"));
-//
-//        // Update the properties of the ticket category with the values from updatedTicketCategory
-//        // Example: ticketCategory.setName(updatedTicketCategory.getName());
-//        //Dont really need
-//
-//        return ticketService.save(ticket);
-//    }
-
 //    @DeleteMapping("/{event_id}/{session_id}/{venue_id}/{section_id}")
 //    void deleteTicket(@PathVariable Long event_id, @PathVariable Long session_id, @PathVariable Long venue_id, @PathVariable String section_id) {
 //        TicketId id = new TicketId(event_id, session_id, venue_id, section_id);
