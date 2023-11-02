@@ -19,9 +19,9 @@ import io.jsonwebtoken.security.Keys;
 
 @Service
 public class JwtServiceImpl implements JwtService {
-    //TODO: Store in env
-    @Value("hellohellohellohellohellohellohellohellohellohellohellohellohellohellohello")
-    private String jwtSigningKey;
+    
+    @Value("${jwt.secret}")
+    String jwtSigningKey;
     
     @Override
     public String extractUserName(String token) {

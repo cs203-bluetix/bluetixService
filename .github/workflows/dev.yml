@@ -10,8 +10,15 @@ jobs:
   build:
     env:
       jwtSecret: ${{secrets.jwtSecret}}
+      S3_ACCESS_KEY: ${{secrets.S3_ACCESS_KEY}}
+      S3_SECRET_ACCESS_KEY: ${{secrets.S3_SECRET_ACCESS_KEY}}
+      S3_REGION_STATIC: ${{secrets.S3_REGION_STATIC}}
+      S3_BUCKET: ${{'bluetixbucket'}}
     runs-on: ubuntu-latest
-
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
@@ -21,10 +28,22 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - name: Set MYSQL for Tests
+      uses: mirromutth/mysql-action@v1.1
+      with:
+        mysql database: 'bluetixdb' # Optional, default value is "test". The specified database which will be create
+        mysql root password: ${{'123'}} # Required if "mysql user" is empty, default is empty. The root superuser password
     - name: Set Environment Variable
       run: echo $jwtSecret
-    - name: Run test Cases
-      run: mvn test 
     - name: Build with Maven
       id: mvnpackage
       run: mvn -B package
+    - name: Static Analysis with pmd
+      uses: pmd/pmd-github-action@v1
+      with:
+        rulesets: 'ruleset.xml'
+        analyzeModifiedFilesOnly: false
+    # - name: Upload SARIF file
+    #   uses: github/codeql-action/upload-sarif@v2
+    #   with:
+    #       sarif_file: pmd-report.sarif
