@@ -10,8 +10,6 @@ name: CICD for BluetixService
 
 on:
   push:
-    branches: [ "main",]
-  pull_request:
     branches: [ "main"]
 
 jobs:
