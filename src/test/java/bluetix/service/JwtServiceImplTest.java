@@ -24,7 +24,7 @@ class JwtServiceImplTest {
     @BeforeEach
     void setUp() {
         jwtService = new JwtServiceImpl();
-        jwtService.jwtSigningKey = "9kqlMjb9YMXzI3IzYYCBxo5zcXtbkLH6twDC4MQzodyySJ2QnLerfu1wMnKobuMv"; // Set a valid secret key for testing
+        jwtService.setSigningKey("9kqlMjb9YMXzI3IzYYCBxo5zcXtbkLH6twDC4MQzodyySJ2QnLerfu1wMnKobuMv"); // Set a valid secret key for testing
     }
 
     @Test
@@ -73,14 +73,14 @@ class JwtServiceImplTest {
 
     private String createToken(String username) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
+        claims.put("role", Collections.singletonList(new SimpleGrantedAuthority("CUSTOMER")));
 
         return jwtService.generateToken(claims, new User(username, "", Collections.emptyList()));
     }
 
     private String createExpiredToken(String username) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")));
+        claims.put("role", Collections.singletonList(new SimpleGrantedAuthority("CUSTOMER")));
 
         // Set an expiration time in the past to create an expired token
         return Jwts.builder()
