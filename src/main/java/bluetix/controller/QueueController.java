@@ -44,7 +44,7 @@ public class QueueController {
     }
 
     @GetMapping("/inService/{eventId}/{sessionId}")
-    public ResponseEntity<Boolean> checkInQueue(@PathVariable("eventId") Long eventId,
+    public ResponseEntity<Boolean> checkInService(@PathVariable("eventId") Long eventId,
             @PathVariable("sessionId") Long sessionId, @AuthenticationPrincipal User user) {
         try {
             boolean status = this.queueService.checkUserInService(eventId, sessionId, user);

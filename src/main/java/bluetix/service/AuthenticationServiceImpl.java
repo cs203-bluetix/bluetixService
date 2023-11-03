@@ -8,7 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import bluetix.dao.request.SignUpRequest;
-import bluetix.dao.request.SigninRequest;
+import bluetix.dao.request.SignInRequest;
 import bluetix.dao.response.JwtAuthenticationResponse;
 import bluetix.model.Creator;
 import bluetix.model.Customer;
@@ -49,7 +49,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     @Override
-    public JwtAuthenticationResponse signin(SigninRequest request) {
+    public JwtAuthenticationResponse signin(SignInRequest request) {
 
         try {
             authenticate(request.getEmail(), request.getPassword());

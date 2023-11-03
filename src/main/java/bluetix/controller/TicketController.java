@@ -62,6 +62,12 @@ public class TicketController {
         return ticketService.findById(event_id, venue_id, section_id);
     }
 
+    
+    @GetMapping("/{session_id}")
+    List<Ticket> getTicketBySessionId(@PathVariable Long session_id) {
+        return ticketService.findBySessionId(session_id);
+    }
+
     @GetMapping("/{event_id}/{venue_id}")
     List<Ticket> getTicketByEventVenueId(@PathVariable Long event_id, @PathVariable Long venue_id) {
         return ticketService.findByEventVenueId(event_id, venue_id);
@@ -71,18 +77,6 @@ public class TicketController {
     List<Long> getUniqueTicketByEventVenueId(@PathVariable Long event_id, @PathVariable Long venue_id) {
         return ticketService.findUniqueByEventVenueId(event_id, venue_id);
     }
-
-//    @PutMapping("/{event_id}/{venue_id}/{section_id}")
-//    Ticket updateTicket(@PathVariable Long id, @RequestBody Ticket updatedTicket) {
-//        Ticket ticket = ticketService.findById(id)
-//                .orElseThrow(() -> new DataNotFoundException("Ticket not found"));
-//
-//        // Update the properties of the ticket category with the values from updatedTicketCategory
-//        // Example: ticketCategory.setName(updatedTicketCategory.getName());
-//        //Dont really need
-//
-//        return ticketService.save(ticket);
-//    }
 
 //    @DeleteMapping("/{event_id}/{session_id}/{venue_id}/{section_id}")
 //    void deleteTicket(@PathVariable Long event_id, @PathVariable Long session_id, @PathVariable Long venue_id, @PathVariable String section_id) {

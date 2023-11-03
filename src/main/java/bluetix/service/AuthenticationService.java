@@ -1,7 +1,7 @@
 package bluetix.service;
 
 import bluetix.dao.request.SignUpRequest;
-import bluetix.dao.request.SigninRequest;
+import bluetix.dao.request.SignInRequest;
 import bluetix.dao.response.JwtAuthenticationResponse;
 
 public interface AuthenticationService {
@@ -9,5 +9,5 @@ public interface AuthenticationService {
 
     JwtAuthenticationResponse signupCreator(SignUpRequest request);
 
-    JwtAuthenticationResponse signin(SigninRequest request);
+    JwtAuthenticationResponse signin(SignInRequest request);
 }
