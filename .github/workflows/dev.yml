@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     env:
-      jwtSecret: ${{secrets.jwtSecret}}
+      jwtSecret: ${{secrets.JWT_SECRET}}
       S3_ACCESS_KEY: ${{secrets.S3_ACCESS_KEY}}
       S3_SECRET_ACCESS_KEY: ${{secrets.S3_SECRET_ACCESS_KEY}}
       S3_REGION_STATIC: ${{secrets.S3_REGION_STATIC}}
