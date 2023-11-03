@@ -158,16 +158,6 @@ class QueuingServiceTest {
         assertTrue(queuingService.isEmpty());
     }
 
-    @Test
-    void testGetPosition() {
-        // Arrange
-        User user = createUser(1);
-        queuingService.enqueue(user);
-
-        // Assert
-        assertEquals(1, queuingService.getPosition(user));
-    }
-
     private User createUser(int id) {
         User user = new User();
         user.setId(id);

@@ -115,7 +115,7 @@ class AuthenticationServiceImplTest {
     @Test
     void signin_Success() {
         // Arrange
-        SigninRequest signinRequest = new SigninRequest("john@example.com", "password123");
+        SignInRequest signinRequest = new SignInRequest("john@example.com", "password123");
 
         // Mock repository behavior
         when(userRepo.findByEmail("john@example.com")).thenReturn(Optional.of(new Customer()));
@@ -144,7 +144,7 @@ class AuthenticationServiceImplTest {
     @Test
     void signin_InvalidCredentials() {
         // Arrange
-        SigninRequest signinRequest = new SigninRequest("john@example.com", "invalidPassword");
+        SignInRequest signinRequest = new SignInRequest("john@example.com", "invalidPassword");
 
         // Mock repository behavior
         when(userRepo.findByEmail("john@example.com")).thenReturn(Optional.of(new Customer()));

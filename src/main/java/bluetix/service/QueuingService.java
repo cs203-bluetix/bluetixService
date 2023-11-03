@@ -122,8 +122,4 @@ public class QueuingService {
         return queue.isEmpty() && service.isEmpty();
     }
 
-    public int getPosition(User item) {
-        // return queue.(item);
-        return 1;
-    }
 }

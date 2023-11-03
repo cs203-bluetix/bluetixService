@@ -11,13 +11,14 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import bluetix.dao.request.SigninRequest;
+import bluetix.dao.request.SignInRequest;
 import bluetix.dao.request.SignUpRequest;
 import bluetix.dao.response.JwtAuthenticationResponse;
 import bluetix.repository.UserRepo;
@@ -28,6 +29,7 @@ import bluetix.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -45,7 +47,7 @@ public class AuthenticationController {
     private final UserRepo userRepo;
 
     @PostMapping("/signup/customer")
-    public ResponseEntity<JwtAuthenticationResponse> signupCustomer(@RequestBody SignUpRequest request,
+    public ResponseEntity<JwtAuthenticationResponse> signupCustomer(@Valid @RequestBody SignUpRequest request,
             HttpServletResponse response) {
         JwtAuthenticationResponse responseBody = authenticationService.signupCustomer(request);
         ResponseCookie resCookie = ResponseCookie.from("jwt", responseBody.getToken()).httpOnly(false)
@@ -60,7 +62,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup/creator")
-    public ResponseEntity<JwtAuthenticationResponse> signupCreator(@RequestBody SignUpRequest request,
+    public ResponseEntity<JwtAuthenticationResponse> signupCreator(@Valid @RequestBody SignUpRequest request,
             HttpServletResponse response) {
         JwtAuthenticationResponse responseBody = authenticationService.signupCreator(request);
         ResponseCookie resCookie = ResponseCookie.from("jwt", responseBody.getToken()).httpOnly(false)
@@ -76,7 +78,7 @@ public class AuthenticationController {
 
     @PostMapping("/signin")
     @ResponseBody
-    public ResponseEntity signin(@RequestBody SigninRequest request,
+    public ResponseEntity signin(@Valid @RequestBody SignInRequest request,
             HttpServletResponse response) {
         JwtAuthenticationResponse responseBody;
         try {
@@ -95,7 +97,7 @@ public class AuthenticationController {
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(responseBody);
     }
 
-    @PostMapping("/validateJwt")
+    @GetMapping("/validateJwt")
     @ResponseBody
     public ResponseEntity<JwtAuthenticationResponse> validateJwt(HttpServletRequest request,
             HttpServletResponse response) {

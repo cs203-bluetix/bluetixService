@@ -48,7 +48,6 @@ public class SecurityConfiguration {
                         .requestMatchers("/api/ticket/**").permitAll()
                         .requestMatchers("/api/creators/**").permitAll()
                         .requestMatchers("/api/storage/**").permitAll()
-                        .requestMatchers("/api/v1/resource").hasAuthority("CREATOR")
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))
                 .authenticationProvider(authenticationProvider()).addFilterBefore(
