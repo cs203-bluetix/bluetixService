@@ -52,7 +52,7 @@ public class QueuingService {
             this.userRepo.save(user);
             queue.offer(user);
         } else {
-            System.out.println("tf??");
+            System.out.println("tf??"); 
             throw new RuntimeException();
         }
     }
