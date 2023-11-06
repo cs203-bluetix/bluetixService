@@ -25,7 +25,6 @@ public class SessionController {
         this.sessionService = sessionService;
     }
 
-    @Cacheable("sessionCache")
     @GetMapping
     public List<Session> getAllSessions() {
         return sessionService.findAll();
