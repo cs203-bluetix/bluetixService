@@ -18,7 +18,7 @@ import bluetix.repository.EventRepo;
 import bluetix.serializable.SessionId;
 
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RequestMapping("/api/queue")
 
 public class QueueController {
