@@ -51,11 +51,11 @@ public class AuthenticationController {
             HttpServletResponse response) {
         JwtAuthenticationResponse responseBody = authenticationService.signupCustomer(request);
         ResponseCookie resCookie = ResponseCookie.from("jwt", responseBody.getToken()).httpOnly(false)
-        .maxAge(Duration.ofHours(10))
-        .path("/")
-        .httpOnly(false)
-        .secure(false)
-        .build();
+                .maxAge(Duration.ofHours(10))
+                .path("/")
+                .httpOnly(false)
+                .secure(false)
+                .build();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Set-Cookie", resCookie.toString());
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(responseBody);
@@ -66,11 +66,11 @@ public class AuthenticationController {
             HttpServletResponse response) {
         JwtAuthenticationResponse responseBody = authenticationService.signupCreator(request);
         ResponseCookie resCookie = ResponseCookie.from("jwt", responseBody.getToken()).httpOnly(false)
-        .maxAge(Duration.ofHours(10))
-        .path("/")
-        .httpOnly(false)
-        .secure(false)
-        .build();
+                .maxAge(Duration.ofHours(10))
+                .path("/")
+                .httpOnly(false)
+                .secure(false)
+                .build();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Set-Cookie", resCookie.toString());
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(responseBody);
@@ -87,11 +87,11 @@ public class AuthenticationController {
             return ResponseEntity.status(HttpStatusCode.valueOf(401)).build();
         }
         ResponseCookie resCookie = ResponseCookie.from("jwt", responseBody.getToken()).httpOnly(false)
-        .maxAge(Duration.ofHours(10))
-        .path("/")
-        .httpOnly(false)
-        .secure(false)
-        .build();
+                .maxAge(Duration.ofHours(10))
+                .path("/")
+                .httpOnly(false)
+                .secure(false)
+                .build();
         HttpHeaders headers = new HttpHeaders();
         headers.add("Set-Cookie", resCookie.toString());
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(responseBody);
@@ -111,7 +111,7 @@ public class AuthenticationController {
                 }
             }
         }
-      
+
         String userEmail = jwtService.extractUserName(jwt);
         if (StringUtils.isNotEmpty(userEmail)) {
             UserDetails userDetails = userService.userDetailsService()
@@ -124,5 +124,20 @@ public class AuthenticationController {
             }
         }
         return ResponseEntity.badRequest().body(JwtAuthenticationResponse.builder().build());
+    }
+
+    @GetMapping("/logout")
+    @ResponseBody
+    public ResponseEntity logout(HttpServletRequest request,
+            HttpServletResponse response) {
+        ResponseCookie resCookie = ResponseCookie.from("jwt", "").httpOnly(false)
+                .maxAge(0)
+                .path("/")
+                .httpOnly(true)
+                .secure(false)
+                .build();
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Set-Cookie", resCookie.toString());
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).body("");
     }
 }
