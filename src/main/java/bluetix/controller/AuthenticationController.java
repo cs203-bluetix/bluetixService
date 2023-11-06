@@ -33,7 +33,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:3000", "https://bluetix-vercel.vercel.app/"}, allowCredentials = "true")
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
