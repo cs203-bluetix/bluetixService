@@ -53,7 +53,7 @@ public class QueuingService {
             queue.offer(user);
         } else {
             System.out.println("tf??"); 
-            throw new RuntimeException();
+            // throw new RuntimeException();
         }
     }
 
