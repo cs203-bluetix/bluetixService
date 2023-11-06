@@ -27,7 +27,6 @@ public class SectionController {
         this.sectionService = sectionService;
     }
     
-    @Cacheable("sectionsCache")
     @GetMapping("/")
     public List<Section> getAllSections() {
         return sectionService.findAll();

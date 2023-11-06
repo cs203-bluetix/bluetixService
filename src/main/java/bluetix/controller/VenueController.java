@@ -34,7 +34,6 @@ public class VenueController {
         return venueRepo.save(newVenue);
     }
     
-    @Cacheable("venuesCache")
     @GetMapping
     List<Venue> getAllVenues() {
         return venueRepo.findAll();
