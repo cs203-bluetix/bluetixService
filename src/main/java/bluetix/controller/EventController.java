@@ -106,7 +106,6 @@ public class EventController {
 //	}
 
 
-    @Cacheable("eventsCache")
     @GetMapping
     List<Event> getAllEvents() {
         return eventRepo.findAll();
